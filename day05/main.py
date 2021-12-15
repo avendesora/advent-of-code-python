@@ -56,6 +56,17 @@ def _clean_line(file_line: str) -> str:
 
 
 def plot_lines(input_lines: list[Line]) -> list[list[int]]:
+    line_graph = _initialize_line_graph(input_lines)
+
+    for input_line in input_lines:
+        for row_index in range(input_line.start.y, input_line.end.y + 1):
+            for column_index in range(input_line.start.x, input_line.end.x + 1):
+                line_graph[row_index][column_index] += 1
+
+    return line_graph
+
+
+def _initialize_line_graph(input_lines: list[Line]) -> list[list[int]]:
     max_x: int = 0
     max_y: int = 0
 
@@ -68,13 +79,8 @@ def plot_lines(input_lines: list[Line]) -> list[list[int]]:
 
     line_graph: list[list[int]] = []
 
-    for row_index in range(max_y):
+    for _ in range(max_y):
         line_graph.append([0] * max_x)
-
-    for input_line in input_lines:
-        for row_index in range(input_line.start.y, input_line.end.y + 1):
-            for column_index in range(input_line.start.x, input_line.end.x + 1):
-                line_graph[row_index][column_index] += 1
 
     return line_graph
 
@@ -84,6 +90,7 @@ def count_intersections(line_graph: list[list[int]]) -> int:
 
 
 if __name__ == "__main__":
+    # Part One
     lines = read_input("input.txt")
     plot = plot_lines(lines)
     print(
