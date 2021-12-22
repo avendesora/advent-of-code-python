@@ -1,3 +1,4 @@
+from functools import lru_cache
 from statistics import mean, median, mode
 from typing import Optional
 
@@ -16,9 +17,6 @@ def calculate_fuel(positions: list[int], target_position: int) -> int:
     return fuel_consumption
 
 
-CACHE: dict[int, Optional[int]] = {}
-
-
 def calculate_fuel2(positions: list[int], target_position: int) -> int:
     total_fuel_consumption: int = 0
 
@@ -27,16 +25,14 @@ def calculate_fuel2(positions: list[int], target_position: int) -> int:
             continue
 
         distance: int = abs(position - target_position) + 1
-
-        fuel_consumption: Optional[int] = CACHE.get(distance)
-
-        if fuel_consumption is None:
-            fuel_consumption = sum(range(distance))
-            CACHE[distance] = fuel_consumption
-
-        total_fuel_consumption += fuel_consumption if fuel_consumption else 0
+        total_fuel_consumption += _get_fuel_consumption(distance)
 
     return total_fuel_consumption
+
+
+@lru_cache(maxsize=None)
+def _get_fuel_consumption(distance: int) -> int:
+    return sum(range(distance))
 
 
 if __name__ == "__main__":
