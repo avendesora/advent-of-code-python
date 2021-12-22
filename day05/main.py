@@ -54,7 +54,7 @@ def plot_horizontal_and_vertical_lines(input_lines: list[Line]) -> list[list[int
 
     for input_line in input_lines:
         if _is_diagonal(
-                input_line.start.x, input_line.start.y, input_line.end.x, input_line.end.y
+            input_line.start.x, input_line.start.y, input_line.end.x, input_line.end.y
         ):
             continue
 
@@ -90,13 +90,21 @@ def _initialize_line_graph(input_lines: list[Line]) -> list[list[int]]:
     return line_graph
 
 
-def plot_lines(input_lines: list[Line], include_diagonals: bool = False) -> list[list[int]]:
+def plot_lines(
+    input_lines: list[Line], include_diagonals: bool = False
+) -> list[list[int]]:
     line_graph = _initialize_line_graph(input_lines)
 
     for input_line in input_lines:
-        if _is_diagonal(
-                input_line.start.x, input_line.start.y, input_line.end.x, input_line.end.y
-        ) and not include_diagonals:
+        if (
+            _is_diagonal(
+                input_line.start.x,
+                input_line.start.y,
+                input_line.end.x,
+                input_line.end.y,
+            )
+            and not include_diagonals
+        ):
             continue
 
         x_increment, start_x, end_x = _get_increment_start_and_end(
@@ -105,7 +113,10 @@ def plot_lines(input_lines: list[Line], include_diagonals: bool = False) -> list
         y_increment, start_y, end_y = _get_increment_start_and_end(
             input_line.start.y, input_line.end.y
         )
-        line_length = max(abs(input_line.start.x - input_line.end.x), abs(input_line.start.y - input_line.end.y))
+        line_length = max(
+            abs(input_line.start.x - input_line.end.x),
+            abs(input_line.start.y - input_line.end.y),
+        )
         x_coordinates = _get_coordinate_list(start_x, end_x, x_increment, line_length)
         y_coordinates = _get_coordinate_list(start_y, end_y, y_increment, line_length)
 
