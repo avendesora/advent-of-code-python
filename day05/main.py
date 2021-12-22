@@ -26,29 +26,13 @@ def read_input(filename: str) -> list[Line]:
             start_x, start_y = [int(value) for value in start.split(",")]
             end_x, end_y = [int(value) for value in end.split(",")]
 
-            # Ignore diagonals and go ahead and sort
-            if (
-                start_x == end_x
-                and start_y > end_y
-                or start_x != end_x
-                and start_y == end_y
-                and start_x > end_x
-            ):
-                input_lines.append(
-                    Line(Point2D(end_x, end_y), Point2D(start_x, start_y))
-                )
-            elif (
-                start_x == end_x
-                and start_y < end_y
-                or start_x != end_x
-                and start_y == end_y
-                and start_x < end_x
-            ):
+            # Horizontal and Vertical Lines
+            if start_x == end_x or start_y == end_y:
                 input_lines.append(
                     Line(Point2D(start_x, start_y), Point2D(end_x, end_y))
                 )
 
-            # 45 degree diagonals
+            # 45 Degree Diagonal Lines
             if _is_diagonal(start_x, start_y, end_x, end_y):
                 input_lines.append(
                     Line(Point2D(start_x, start_y), Point2D(end_x, end_y))
@@ -70,7 +54,7 @@ def plot_horizontal_and_vertical_lines(input_lines: list[Line]) -> list[list[int
 
     for input_line in input_lines:
         if _is_diagonal(
-            input_line.start.x, input_line.start.y, input_line.end.x, input_line.end.y
+                input_line.start.x, input_line.start.y, input_line.end.x, input_line.end.y
         ):
             continue
 
@@ -89,8 +73,14 @@ def _initialize_line_graph(input_lines: list[Line]) -> list[list[int]]:
         if input_line.end.x + 1 > max_x:
             max_x = input_line.end.x + 1
 
+        if input_line.start.x + 1 > max_x:
+            max_x = input_line.start.x + 1
+
         if input_line.end.y + 1 > max_y:
             max_y = input_line.end.y + 1
+
+        if input_line.start.y + 1 > max_y:
+            max_y = input_line.start.y + 1
 
     line_graph: list[list[int]] = []
 
@@ -100,13 +90,13 @@ def _initialize_line_graph(input_lines: list[Line]) -> list[list[int]]:
     return line_graph
 
 
-def plot_diagonal_lines(
-    input_lines: list[Line], line_graph: list[list[int]]
-) -> list[list[int]]:
+def plot_lines(input_lines: list[Line], include_diagonals: bool = False) -> list[list[int]]:
+    line_graph = _initialize_line_graph(input_lines)
+
     for input_line in input_lines:
-        if not _is_diagonal(
-            input_line.start.x, input_line.start.y, input_line.end.x, input_line.end.y
-        ):
+        if _is_diagonal(
+                input_line.start.x, input_line.start.y, input_line.end.x, input_line.end.y
+        ) and not include_diagonals:
             continue
 
         x_increment, start_x, end_x = _get_increment_start_and_end(
@@ -115,9 +105,11 @@ def plot_diagonal_lines(
         y_increment, start_y, end_y = _get_increment_start_and_end(
             input_line.start.y, input_line.end.y
         )
-        x_coordinates = list(range(start_x, end_x, x_increment))
+        line_length = max(abs(input_line.start.x - input_line.end.x), abs(input_line.start.y - input_line.end.y))
+        x_coordinates = _get_coordinate_list(start_x, end_x, x_increment, line_length)
+        y_coordinates = _get_coordinate_list(start_y, end_y, y_increment, line_length)
 
-        for index, row_index in enumerate(range(start_y, end_y, y_increment)):
+        for index, row_index in enumerate(y_coordinates):
             column_index = x_coordinates[index]
             line_graph[row_index][column_index] += 1
 
@@ -125,7 +117,17 @@ def plot_diagonal_lines(
 
 
 def _get_increment_start_and_end(start: int, end: int) -> tuple[int, int, int]:
+    if start == end:
+        return 1, start, end
+
     return (1, start, end + 1) if start < end else (-1, start, end - 1)
+
+
+def _get_coordinate_list(start, end, increment, length) -> list[int]:
+    if start == end:
+        return [start] * (length + 1)
+
+    return list(range(start, end, increment))
 
 
 def count_intersections(line_graph: list[list[int]]) -> int:
@@ -135,7 +137,7 @@ def count_intersections(line_graph: list[list[int]]) -> int:
 if __name__ == "__main__":
     # Part One
     lines = read_input("input.txt")
-    plot = plot_horizontal_and_vertical_lines(lines)
+    plot = plot_lines(lines)
 
     for plot_line in plot:
         print(plot_line)
@@ -145,7 +147,7 @@ if __name__ == "__main__":
     )
 
     # Part Two
-    plot2 = plot_diagonal_lines(lines, plot)
+    plot2 = plot_lines(lines, True)
 
     for plot_line in plot2:
         print(plot_line)
