@@ -106,7 +106,7 @@ def get_digits(signal_pattern_entry: list[str]) -> list[str]:
         segment_7_mappings = character_set.copy()
         segment_5_mappings.discard(character_set.pop())
         digit_9_mapping = signal_pattern_value
-        zero_six_nine.remove(signal_pattern_value)
+        zero_six_nine.remove(digit_9_mapping)
         break
 
     # Digit 0
@@ -120,7 +120,7 @@ def get_digits(signal_pattern_entry: list[str]) -> list[str]:
         segment_2_mappings = segment_2_mappings.intersection(character_set)
         segment_4_mappings = segment_4_mappings.symmetric_difference(segment_2_mappings)
         digit_0_mapping = signal_pattern_value
-        zero_six_nine.remove(signal_pattern_value)
+        zero_six_nine.remove(digit_0_mapping)
         break
 
     # Digit 6

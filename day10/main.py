@@ -1,5 +1,3 @@
-from typing import Union
-
 from helpers import read_input_as_string_array
 
 OPEN_AND_CLOSE_CHARACTERS: dict[str, str] = {
@@ -28,10 +26,10 @@ def check_line(input_line: str) -> tuple[bool, list[str]]:
     stack: list[str] = []
 
     for character in input_line:
-        if not stack and character not in OPEN_AND_CLOSE_CHARACTERS.keys():
+        if not stack and character not in OPEN_AND_CLOSE_CHARACTERS:
             return False, [character]
 
-        if character in OPEN_AND_CLOSE_CHARACTERS.keys():
+        if character in OPEN_AND_CLOSE_CHARACTERS:
             stack.append(character)
             continue
 

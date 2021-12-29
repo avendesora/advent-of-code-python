@@ -9,24 +9,26 @@ def get_risk_level(point_array: list[list[int]]) -> int:
     for row_index, row in enumerate(point_array):
         for column_index, cell in enumerate(row):
             # Check above
-            if row_index > 0:
-                if point_array[row_index - 1][column_index] <= cell:
-                    continue
+            if row_index > 0 and point_array[row_index - 1][column_index] <= cell:
+                continue
 
             # Check below
-            if row_index < len(point_array) - 1:
-                if point_array[row_index + 1][column_index] <= cell:
-                    continue
+            if (
+                row_index < len(point_array) - 1
+                and point_array[row_index + 1][column_index] <= cell
+            ):
+                continue
 
             # Check left
-            if column_index > 0:
-                if point_array[row_index][column_index - 1] <= cell:
-                    continue
+            if column_index > 0 and point_array[row_index][column_index - 1] <= cell:
+                continue
 
             # Check right
-            if column_index < len(row) - 1:
-                if point_array[row_index][column_index + 1] <= cell:
-                    continue
+            if (
+                column_index < len(row) - 1
+                and point_array[row_index][column_index + 1] <= cell
+            ):
+                continue
 
             risk_level = cell + 1
             total_risk_level += risk_level
