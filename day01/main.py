@@ -1,12 +1,4 @@
-def read_input(filename: str) -> list[int]:
-    with open(filename, "r", encoding="utf-8") as lines:
-        return [
-            int(_clean_line(line)) for line in lines if _clean_line(line).isnumeric()
-        ]
-
-
-def _clean_line(line: str) -> str:
-    return line.replace("\n", "")
+from helpers import read_input_as_int_array
 
 
 def count_larger_depths(depth_numbers: list[int]) -> int:
@@ -40,7 +32,7 @@ def apply_sliding_window(depth_numbers: list[int], window_size: int) -> list[int
 
 if __name__ == "__main__":
     # Part One
-    depths: list[int] = read_input("input.txt")
+    depths: list[int] = read_input_as_int_array("input.txt")
     print(f"The depth increased {count_larger_depths(depths)} times.")
 
     # Part Two

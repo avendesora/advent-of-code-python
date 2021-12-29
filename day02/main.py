@@ -1,6 +1,8 @@
 from dataclasses import dataclass
 from enum import Enum
 
+from helpers import clean_line
+
 
 class Direction(Enum):
     FORWARD = "forward"
@@ -25,16 +27,12 @@ def read_input(filename: str) -> list[Command]:
 
     with open(filename, "r", encoding="utf-8") as lines:
         for line in lines:
-            direction_string, distance_string = _clean_line(line).split(" ")
+            direction_string, distance_string = clean_line(line).split(" ")
             input_commands.append(
                 Command(Direction(direction_string), int(distance_string))
             )
 
     return input_commands
-
-
-def _clean_line(line: str) -> str:
-    return line.replace("\n", "")
 
 
 def plot_movement(input_commands: list[Command]) -> Point2D:

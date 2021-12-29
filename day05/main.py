@@ -1,6 +1,8 @@
 from dataclasses import dataclass
 from itertools import chain
 
+from helpers import clean_line
+
 
 @dataclass
 class Point2D:
@@ -19,10 +21,10 @@ def read_input(filename: str) -> list[Line]:
 
     with open(filename, "r", encoding="utf-8") as file_lines:
         for file_line in file_lines:
-            if len(_clean_line(file_line).strip()) == 0:
+            if len(clean_line(file_line).strip()) == 0:
                 continue
 
-            start, end = _clean_line(file_line).strip().split(" -> ")
+            start, end = clean_line(file_line).strip().split(" -> ")
             start_x, start_y = [int(value) for value in start.split(",")]
             end_x, end_y = [int(value) for value in end.split(",")]
 
@@ -39,10 +41,6 @@ def read_input(filename: str) -> list[Line]:
                 )
 
     return input_lines
-
-
-def _clean_line(file_line: str) -> str:
-    return file_line.replace("\n", "")
 
 
 def _is_diagonal(start_x, start_y, end_x, end_y):
@@ -146,12 +144,13 @@ def count_intersections(line_graph: list[list[int]]) -> int:
 
 
 if __name__ == "__main__":
-    # Part One
     lines = read_input("input.txt")
+
+    # Part One
     plot = plot_lines(lines)
 
-    for plot_line in plot:
-        print(plot_line)
+    # for plot_line in plot:
+    #     print(plot_line)
 
     print(
         f"There are {count_intersections(plot)} points where at least two lines overlap."
@@ -160,8 +159,8 @@ if __name__ == "__main__":
     # Part Two
     plot2 = plot_lines(lines, True)
 
-    for plot_line in plot2:
-        print(plot_line)
+    # for plot_line in plot2:
+    #     print(plot_line)
 
     print(
         f"There are {count_intersections(plot2)} points where at least two lines overlap."

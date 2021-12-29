@@ -1,8 +1,9 @@
-from day09.main import read_input, get_risk_level, get_basins, get_product_size
+from day09.main import get_risk_level, get_basins, get_product_size
+from helpers import read_input_as_2d_int_array
 
 
 def test_day_09_read_input():
-    sample_input = read_input("sample_input.txt")
+    sample_input = read_input_as_2d_int_array("sample_input.txt")
     assert sample_input == [
         [2, 1, 9, 9, 9, 4, 3, 2, 1, 0],
         [3, 9, 8, 7, 8, 9, 4, 9, 2, 1],
@@ -13,11 +14,11 @@ def test_day_09_read_input():
 
 
 def test_day_09_part_one():
-    sample_input = read_input("sample_input.txt")
+    sample_input = read_input_as_2d_int_array("sample_input.txt")
     assert get_risk_level(sample_input) == 15
 
 
 def test_day_09_part_two():
-    sample_input = read_input("sample_input.txt")
+    sample_input = read_input_as_2d_int_array("sample_input.txt")
     basins: list[set[str]] = get_basins(sample_input)
     assert get_product_size(basins, 3) == 1134

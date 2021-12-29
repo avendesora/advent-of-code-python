@@ -1,5 +1,4 @@
 from day10.main import (
-    read_input,
     check_line,
     get_invalid_characters,
     get_syntax_error_score,
@@ -7,10 +6,11 @@ from day10.main import (
     get_completion_string_score,
     get_final_completion_score,
 )
+from helpers import read_input_as_string_array
 
 
 def test_day_10_read_input():
-    sample_input = read_input("sample_input.txt")
+    sample_input = read_input_as_string_array("sample_input.txt")
     assert sample_input == [
         "[({(<(())[]>[[{[]{<()<>>",
         "[(()[<>])]({[<{<<[]>>(",
@@ -26,7 +26,7 @@ def test_day_10_read_input():
 
 
 def test_day_10_part_one():
-    sample_input = read_input("sample_input.txt")
+    sample_input = read_input_as_string_array("sample_input.txt")
 
     assert check_line(sample_input[0]) == (
         True,
@@ -54,7 +54,7 @@ def test_day_10_part_one():
 
 
 def test_day_10_part_two():
-    sample_input = read_input("sample_input.txt")
+    sample_input = read_input_as_string_array("sample_input.txt")
 
     _, stack0 = check_line(sample_input[0])
     _, stack1 = check_line(sample_input[1])

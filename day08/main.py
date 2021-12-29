@@ -1,10 +1,13 @@
+from helpers import clean_line
+
+
 def read_input(filename: str) -> tuple[list[list[str]], list[list[str]]]:
     input_signal_patterns: list[list[str]] = []
     input_output_values: list[list[str]] = []
 
     with open(filename, "r", encoding="utf-8") as file_lines:
         for file_line in file_lines:
-            clean_file_line = _clean_line(file_line).strip()
+            clean_file_line = clean_line(file_line).strip()
 
             if len(clean_file_line) == 0:
                 continue
@@ -14,10 +17,6 @@ def read_input(filename: str) -> tuple[list[list[str]], list[list[str]]]:
             input_output_values.append(raw_output_values.split(" "))
 
     return input_signal_patterns, input_output_values
-
-
-def _clean_line(file_line: str) -> str:
-    return file_line.replace("\n", "")
 
 
 def get_digits(signal_pattern_entry: list[str]) -> list[str]:

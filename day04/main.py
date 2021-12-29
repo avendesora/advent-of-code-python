@@ -1,5 +1,7 @@
 from itertools import chain
 
+from helpers import transpose_2d_int_array
+
 
 def read_input(filename: str) -> tuple[list[int], list[list[list[int]]]]:
     numbers: list[int] = []
@@ -61,8 +63,7 @@ def _check_rows(bingo_board: list[list[int]]) -> bool:
 
 
 def _check_columns(bingo_board: list[list[int]]) -> bool:
-    transposed_board = [list(x) for x in zip(*bingo_board)]
-    return _check_rows(transposed_board)
+    return _check_rows(transpose_2d_int_array(bingo_board))
 
 
 def sum_board(bingo_board: list[list[int]]) -> int:

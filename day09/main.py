@@ -1,23 +1,6 @@
 from functools import reduce
 
-
-def read_input(filename: str) -> list[list[int]]:
-    input_2d_array: list[list[int]] = []
-
-    with open(filename, "r", encoding="utf-8") as file_lines:
-        for file_line in file_lines:
-            clean_file_line = _clean_line(file_line).strip()
-
-            if len(clean_file_line) == 0:
-                continue
-
-            input_2d_array.append([int(character) for character in clean_file_line])
-
-    return input_2d_array
-
-
-def _clean_line(file_line: str) -> str:
-    return file_line.replace("\n", "")
+from helpers import read_input_as_2d_int_array
 
 
 def get_risk_level(point_array: list[list[int]]) -> int:
@@ -139,7 +122,7 @@ def get_product_size(basin_list: list[set[str]], number_of_basins: int) -> int:
 
 
 if __name__ == "__main__":
-    height_map: list[list[int]] = read_input("input.txt")
+    height_map: list[list[int]] = read_input_as_2d_int_array("input.txt")
 
     # Part One
     print(f"Total risk level = {get_risk_level(height_map)}")

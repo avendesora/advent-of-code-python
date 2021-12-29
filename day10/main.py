@@ -1,5 +1,7 @@
 from typing import Union
 
+from helpers import read_input_as_string_array
+
 OPEN_AND_CLOSE_CHARACTERS: dict[str, str] = {
     "(": ")",
     "[": "]",
@@ -20,20 +22,6 @@ COMPLETION_SCORES: dict[str, int] = {
     "}": 3,
     ">": 4,
 }
-
-
-def read_input(filename: str) -> list[str]:
-    input_lines: list[str] = []
-
-    with open(filename, "r", encoding="utf-8") as file_lines:
-        for file_line in file_lines:
-            input_lines.append(_clean_line(file_line))
-
-    return input_lines
-
-
-def _clean_line(file_line: str) -> str:
-    return file_line.replace("\n", "")
 
 
 def check_line(input_line: str) -> tuple[bool, list[str]]:
@@ -76,8 +64,7 @@ def get_syntax_error_score(input_lines: list[str]) -> int:
 
 def get_completion_string(stack: list[str]) -> str:
     return "".join(
-        OPEN_AND_CLOSE_CHARACTERS.get(character, "")
-        for character in reversed(stack)
+        OPEN_AND_CLOSE_CHARACTERS.get(character, "") for character in reversed(stack)
     )
 
 
@@ -109,7 +96,7 @@ def get_final_completion_score(input_lines: list[str]) -> int:
 
 
 if __name__ == "__main__":
-    lines = read_input("input.txt")
+    lines = read_input_as_string_array("input.txt")
 
     # Part One
     print(f"The total syntax error score is {get_syntax_error_score(lines)}.")

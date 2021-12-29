@@ -1,6 +1,4 @@
-def read_input(filename: str) -> list[int]:
-    with open(filename, "r", encoding="utf-8") as file_lines:
-        return [int(x) for x in file_lines.readline().split(",")]
+from helpers import read_input_as_int_array_from_csv
 
 
 def grow_one_day(initial_school: list[int]) -> list[int]:
@@ -62,17 +60,17 @@ def update_school_dict(current_school_dict: dict[int, int]) -> dict[int, int]:
 
 
 if __name__ == "__main__":
-    original_school = read_input("input.txt")
+    original_school = read_input_as_int_array_from_csv("input.txt")
 
     # Part One
     school = original_school.copy()
-    print(f"Initial state: {school}")
+    # print(f"Initial state: {school}")
 
     number_of_days = 80
 
     for day in range(number_of_days):
         school = grow_one_day(school)
-        print(f"After {day + 1} day(s): {school}")
+        # print(f"After {day + 1} day(s): {school}")
 
     print(
         f"There are a total of {len(school)} fish in the school after {number_of_days} days."
@@ -84,7 +82,7 @@ if __name__ == "__main__":
 
     for day in range(number_of_days2):
         school_dict = update_school_dict(school_dict)
-        print(f"After {day + 1} days(s): {school_dict}")
+        # print(f"After {day + 1} days(s): {school_dict}")
 
     print(
         f"There are a total of {sum(school_dict.values())} fish in the school after {number_of_days2} days."

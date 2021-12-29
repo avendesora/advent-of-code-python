@@ -1,26 +1,10 @@
 from statistics import median, mode
 
+from helpers import read_input_as_2d_int_array, transpose_2d_int_array
+
 
 def read_input(filename: str) -> list[list[int]]:
-    input_2d_array: list[list[int]] = []
-
-    with open(filename, "r", encoding="utf-8") as lines:
-        for line in lines:
-            counter: int = 0
-
-            for digit in _clean_line(line):
-                if len(input_2d_array) <= counter:
-                    input_2d_array.append([int(digit)])
-                else:
-                    input_2d_array[counter].append(int(digit))
-
-                counter += 1
-
-    return input_2d_array
-
-
-def _clean_line(line: str) -> str:
-    return line.replace("\n", "")
+    return transpose_2d_int_array(read_input_as_2d_int_array(filename))
 
 
 def get_gamma_and_epsilon_rates(input_2d_array: list[list[int]]) -> tuple[int, int]:
@@ -101,8 +85,9 @@ def get_life_support_rating(oxygen_generator: int, co2_scrubber: int) -> int:
 
 
 if __name__ == "__main__":
-    # Part One
     binary_data = read_input("input.txt")
+
+    # Part One
     gamma_rate, epsilon_rate = get_gamma_and_epsilon_rates(binary_data)
     power_consumption = get_power_consumption(gamma_rate, epsilon_rate)
     print(f"The power consumption of the submarine is {power_consumption}.")
