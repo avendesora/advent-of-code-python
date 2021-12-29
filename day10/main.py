@@ -40,9 +40,8 @@ def check_line(input_line: str) -> tuple[bool, list[str]]:
     stack: list[str] = []
 
     for character in input_line:
-        if len(stack) == 0:
-            if character not in OPEN_AND_CLOSE_CHARACTERS.keys():
-                return False, [character]
+        if not stack and character not in OPEN_AND_CLOSE_CHARACTERS.keys():
+            return False, [character]
 
         if character in OPEN_AND_CLOSE_CHARACTERS.keys():
             stack.append(character)
@@ -69,21 +68,17 @@ def get_invalid_characters(input_lines: list[str]) -> list[str]:
 
 
 def get_syntax_error_score(input_lines: list[str]) -> int:
-    error_score: int = 0
-
-    for invalid_character in get_invalid_characters(input_lines):
-        error_score += ERROR_SCORES.get(invalid_character, 0)
-
-    return error_score
+    return sum(
+        ERROR_SCORES.get(invalid_character, 0)
+        for invalid_character in get_invalid_characters(input_lines)
+    )
 
 
 def get_completion_string(stack: list[str]) -> str:
-    completion_string: str = ""
-
-    for character in reversed(stack):
-        completion_string += OPEN_AND_CLOSE_CHARACTERS.get(character, "")
-
-    return completion_string
+    return "".join(
+        OPEN_AND_CLOSE_CHARACTERS.get(character, "")
+        for character in reversed(stack)
+    )
 
 
 def get_completion_string_score(completion_string: str) -> int:
