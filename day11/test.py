@@ -1,5 +1,3 @@
-import pytest
-
 from day11.main import (
     count_flashes,
     find_first_simultaneous_flash,
