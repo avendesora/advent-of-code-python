@@ -81,7 +81,6 @@ def test_day_11_part_one():
     assert take_steps(read_input_as_2d_int_array("sample_input.txt"), 100) == 1656
 
 
-@pytest.mark.xfail
 def test_day_11_part_two():
     sample_input = read_input_as_2d_int_array("sample_input.txt")
     assert find_first_simultaneous_flash(sample_input) == 195
