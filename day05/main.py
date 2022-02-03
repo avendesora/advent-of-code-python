@@ -1,13 +1,7 @@
 from dataclasses import dataclass
 from itertools import chain
 
-from helpers import clean_line
-
-
-@dataclass
-class Point2D:
-    x: int
-    y: int
+from helpers import clean_line, Point2D
 
 
 @dataclass

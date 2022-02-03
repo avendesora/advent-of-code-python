@@ -1,7 +1,7 @@
 from dataclasses import dataclass
 from enum import Enum
 
-from helpers import clean_line
+from helpers import clean_line, Point2D
 
 
 class Direction(Enum):
@@ -14,12 +14,6 @@ class Direction(Enum):
 class Command:
     direction: Direction
     distance: int
-
-
-@dataclass
-class Point2D:
-    x: int
-    y: int
 
 
 def read_input(filename: str) -> list[Command]:

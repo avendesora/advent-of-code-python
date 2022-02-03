@@ -1,6 +1,6 @@
 from itertools import chain
 
-from helpers import transpose_2d_int_array
+from helpers import clean_line, transpose_2d_int_array
 
 
 def read_input(filename: str) -> tuple[list[int], list[list[list[int]]]]:
@@ -10,11 +10,11 @@ def read_input(filename: str) -> tuple[list[int], list[list[list[int]]]]:
 
     with open(filename, "r", encoding="utf-8") as lines:
         for line in lines:
-            if len(_clean_line(line).strip()) == 0:
+            if len(clean_line(line).strip()) == 0:
                 continue
 
             if not numbers:
-                numbers.extend([int(value) for value in _clean_line(line).split(",")])
+                numbers.extend([int(value) for value in clean_line(line).split(",")])
                 continue
 
             current_board.append(
@@ -26,10 +26,6 @@ def read_input(filename: str) -> tuple[list[int], list[list[list[int]]]]:
                 current_board = []
 
     return numbers, bingo_boards
-
-
-def _clean_line(line: str) -> str:
-    return line.replace("\n", "")
 
 
 def update_board(bingo_board: list[list[int]], call_number: int) -> list[list[int]]:

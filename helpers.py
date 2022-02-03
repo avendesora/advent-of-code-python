@@ -1,3 +1,6 @@
+from dataclasses import dataclass
+
+
 def read_input_as_int_array(filename: str) -> list[int]:
     with open(filename, "r", encoding="utf-8") as lines:
         return [int(clean_line(line)) for line in lines if clean_line(line).isnumeric()]
@@ -34,3 +37,9 @@ def clean_line(file_line: str) -> str:
 
 def transpose_2d_int_array(input_array: list[list[int]]) -> list[list[int]]:
     return [list(x) for x in zip(*input_array)]
+
+
+@dataclass
+class Point2D:
+    x: int
+    y: int
