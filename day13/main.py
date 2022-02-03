@@ -1,6 +1,6 @@
 from enum import Enum
 
-from helpers import clean_line, Point2D, transpose_2d_int_array
+from helpers import clean_line, Point2D, transpose_2d_array
 
 
 class Axis(Enum):
@@ -36,7 +36,7 @@ def read_input(filename: str) -> tuple[list[Point2D], list[tuple[Axis, int]]]:
 def initialize_pattern(input_dots: list[Point2D]) -> list[list[bool]]:
     max_x: int = max(dot.x for dot in input_dots)
     max_y: int = max(dot.y for dot in input_dots)
-    initial_pattern: list[list[int]] = []
+    initial_pattern: list[list[bool]] = []
 
     for y in range(max_y + 1):
         initial_pattern.append([])
@@ -51,7 +51,7 @@ def initialize_pattern(input_dots: list[Point2D]) -> list[list[bool]]:
 
 
 def fold_x(pattern_to_fold: list[list[bool]], value) -> list[list[bool]]:
-    return transpose_2d_int_array(fold_y(transpose_2d_int_array(pattern_to_fold), value))
+    return transpose_2d_array(fold_y(transpose_2d_array(pattern_to_fold), value))
 
 
 def fold_y(pattern_to_fold: list[list[bool]], value) -> list[list[bool]]:
@@ -65,28 +65,31 @@ def fold_y(pattern_to_fold: list[list[bool]], value) -> list[list[bool]]:
 
         for column_index, cell in enumerate(row):
             try:
-                cell_value = pattern_to_fold[row_index][column_index] or pattern_to_fold[value + (value - row_index)][
-                    column_index]
+                cell_value = (
+                    cell or pattern_to_fold[value + (value - row_index)][column_index]
+                )
             except IndexError:
-                cell_value = pattern_to_fold[row_index][column_index]
+                cell_value = cell
 
             folded_pattern[row_index].append(cell_value)
 
     return folded_pattern
 
 
-def execute_instruction(pattern_to_fold: list[list[bool]], current_instruction: tuple[Axis, int]) -> list[list[bool]]:
+def execute_instruction(
+    pattern_to_fold: list[list[bool]], current_instruction: tuple[Axis, int]
+) -> list[list[bool]]:
     axis, value = current_instruction
 
     if axis == Axis.X:
         return fold_x(pattern_to_fold, value)
-    elif axis == Axis.Y:
-        return fold_y(pattern_to_fold, value)
 
-    return pattern_to_fold
+    return fold_y(pattern_to_fold, value)
 
 
-def printable_pattern(pattern_to_print: list[list[bool]], false_character: str = ".") -> str:
+def printable_pattern(
+    pattern_to_print: list[list[bool]], false_character: str = "."
+) -> str:
     pattern_string: str = ""
 
     for row in pattern_to_print:
@@ -117,7 +120,7 @@ if __name__ == "__main__":
 
     # Part Two
     dots, instructions = read_input("input.txt")
-    pattern: list[list[bool]] = initialize_pattern(dots)
+    pattern = initialize_pattern(dots)
 
     for instruction in instructions:
         pattern = execute_instruction(pattern, instruction)

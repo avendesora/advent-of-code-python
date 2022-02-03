@@ -1,10 +1,10 @@
 from statistics import median, mode
 
-from helpers import read_input_as_2d_int_array, transpose_2d_int_array
+from helpers import read_input_as_2d_int_array, transpose_2d_array
 
 
 def read_input(filename: str) -> list[list[int]]:
-    return transpose_2d_int_array(read_input_as_2d_int_array(filename))
+    return transpose_2d_array(read_input_as_2d_int_array(filename))
 
 
 def get_gamma_and_epsilon_rates(input_2d_array: list[list[int]]) -> tuple[int, int]:

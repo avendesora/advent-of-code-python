@@ -1,4 +1,10 @@
-from day13.main import count_visible_dots, execute_instruction, initialize_pattern, printable_pattern, read_input
+from day13.main import (
+    count_visible_dots,
+    execute_instruction,
+    initialize_pattern,
+    printable_pattern,
+    read_input,
+)
 
 
 def test_day_13_read_input(sample_data):

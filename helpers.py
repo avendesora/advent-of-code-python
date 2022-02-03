@@ -1,4 +1,5 @@
 from dataclasses import dataclass
+from typing import Any
 
 
 def read_input_as_int_array(filename: str) -> list[int]:
@@ -35,7 +36,7 @@ def clean_line(file_line: str) -> str:
     return file_line.replace("\n", "")
 
 
-def transpose_2d_int_array(input_array: list[list[int]]) -> list[list[int]]:
+def transpose_2d_array(input_array: list[list[Any]]) -> list[list[Any]]:
     return [list(x) for x in zip(*input_array)]
 
 
