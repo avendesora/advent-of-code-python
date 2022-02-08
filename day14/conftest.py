@@ -24,3 +24,12 @@ def sample_data():
             "NN": "C",
         },
     )
+
+
+@pytest.fixture
+def pairs():
+    return {
+        "CB": 1,
+        "NC": 1,
+        "NN": 1,
+    }
