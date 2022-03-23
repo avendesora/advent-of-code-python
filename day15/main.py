@@ -17,149 +17,107 @@ class Node:
         return self.risk < other.risk
 
 
-class PriorityQueue:
-    def __init__(self) -> None:
-        self._container: list[Node] = []
+class RiskGraph:
+    def __init__(self, vertex_count: int = 0) -> None:
+        self._edges: list[list[dict[str, int]]] = [[] for _ in range(vertex_count)]
+        self.vertex_count = vertex_count
 
-    @property
-    def empty(self) -> bool:
-        return not self._container
+    def add_edge(self, start: int, end: int, risk: int) -> None:
+        edge: dict[str, int] = {
+            "start": start,
+            "end": end,
+            "risk": risk,
+        }
+        self._edges[edge["start"]].append(edge)
 
-    def push(self, item: Node) -> None:
-        heappush(self._container, item)
-
-    def pop(self) -> Node:
-        return heappop(self._container)
-
-
-@dataclass
-class Edge:
-    start: int
-    end: int
-    risk: int
-
-    def reversed(self) -> Edge:
-        return Edge(self.end, self.start, self.risk)
-
-    def __lt__(self, other: Edge) -> bool:
-        return self.risk < other.risk
-
-
-class Graph:
-    def __init__(self, vertices: list[str]) -> None:
-        self._vertices: list[str] = vertices
-        self._edges: list[list[Edge]] = [[] for _ in vertices]
-
-    @property
-    def vertex_count(self) -> int:
-        return len(self._vertices)
-
-    def add_edge(self, first: str, second: str, weight: int) -> None:
-        u: int = self._vertices.index(first)
-        v: int = self._vertices.index(second)
-        edge: Edge = Edge(u, v, weight)
-        self._edges[edge.start].append(edge)
-
-    def index_of(self, vertex: str) -> int:
-        return self._vertices.index(vertex)
-
-    def edges_for_index(self, index: int) -> list[Edge]:
+    def _edges_for_index(self, index: int) -> list[dict[str, int]]:
         return self._edges[index]
 
+    def _find_shortest_path(self, start: int) -> dict[int, dict[str, int]]:
+        risks: list[Optional[int]] = [None] * self.vertex_count
+        risks[start] = 0
+        paths: dict[int, dict[str, int]] = {}
+        priority_queue: list[Node] = []
+        heappush(priority_queue, Node(start, 0))
 
-def read_input(filename: str) -> tuple[list[tuple[str, str, int]], list[str]]:
-    input_array: list[list[int]] = read_input_as_2d_int_array(filename)
-    vertices: list[str] = []
-    edges: list[tuple[str, str, int]] = []
+        while priority_queue:
+            start = heappop(priority_queue).vertex
+            risk_start: int = risks[start] or 0
 
-    for row_index, row in enumerate(input_array):
+            for weighted_edge in self._edges_for_index(start):
+                risk_end: Optional[int] = risks[weighted_edge["end"]]
+
+                if risk_end is None or risk_end > weighted_edge["risk"] + risk_start:
+                    risks[weighted_edge["end"]] = weighted_edge["risk"] + risk_start
+                    paths[weighted_edge["end"]] = weighted_edge
+                    heappush(
+                        priority_queue,
+                        Node(weighted_edge["end"], weighted_edge["risk"] + risk_start),
+                    )
+
+        return paths
+
+    def get_total_least_risk(self) -> int:
+        shortest_path = self._find_shortest_path(0)
+        edge: dict[str, int] = shortest_path[self.vertex_count - 1]
+        total_risk = edge["risk"]
+
+        while edge["start"] != 0:
+            edge = shortest_path[edge["start"]]
+            total_risk += edge["risk"]
+
+        return total_risk
+
+
+def get_edges(risk_levels: list[list[int]]) -> list[tuple[int, int, int]]:
+    edges: list[tuple[int, int, int]] = []
+    row_length = len(risk_levels[0])
+
+    for row_index, row in enumerate(risk_levels):
         for column_index, _ in enumerate(row):
-            current_cell_name: str = f"{row_index}-{column_index}"
-            vertices.append(current_cell_name)
+            current_cell: int = row_index * row_length + column_index
 
-            with suppress(IndexError):
-                if column_index > 0:
-                    edges.append(
-                        (
-                            current_cell_name,
-                            f"{row_index}-{column_index - 1}",
-                            input_array[row_index][column_index - 1],
-                        )
-                    )
-
-            with suppress(IndexError):
-                if row_index > 0:
-                    edges.append(
-                        (
-                            current_cell_name,
-                            f"{row_index - 1}-{column_index}",
-                            input_array[row_index - 1][column_index],
-                        )
-                    )
-
-            with suppress(IndexError):
+            if column_index > 0:
                 edges.append(
                     (
-                        current_cell_name,
-                        f"{row_index}-{column_index + 1}",
-                        input_array[row_index][column_index + 1],
+                        current_cell,
+                        current_cell - 1,
+                        risk_levels[row_index][column_index - 1],
+                    )
+                )
+
+            if row_index > 0:
+                edges.append(
+                    (
+                        current_cell,
+                        current_cell - row_length,
+                        risk_levels[row_index - 1][column_index],
                     )
                 )
 
             with suppress(IndexError):
                 edges.append(
                     (
-                        current_cell_name,
-                        f"{row_index + 1}-{column_index}",
-                        input_array[row_index + 1][column_index],
+                        current_cell,
+                        current_cell + 1,
+                        risk_levels[row_index][column_index + 1],
                     )
                 )
 
-    return edges, vertices
-
-
-def find_shortest_path(weighted_graph: Graph, root: str) -> dict[int, Edge]:
-    start: int = weighted_graph.index_of(root)
-    risks: list[Optional[int]] = [None] * weighted_graph.vertex_count
-    risks[start] = 0
-    paths: dict[int, Edge] = {}
-    priority_queue: PriorityQueue = PriorityQueue()
-    priority_queue.push(Node(start, 0))
-
-    while not priority_queue.empty:
-        start = priority_queue.pop().vertex
-        risk_start: int = risks[start] or 0
-
-        for weighted_edge in weighted_graph.edges_for_index(start):
-            risk_end: Optional[int] = risks[weighted_edge.end]
-
-            if risk_end is None or risk_end > weighted_edge.risk + risk_start:
-                risks[weighted_edge.end] = weighted_edge.risk + risk_start
-                paths[weighted_edge.end] = weighted_edge
-                priority_queue.push(
-                    Node(weighted_edge.end, weighted_edge.risk + risk_start)
+            with suppress(IndexError):
+                edges.append(
+                    (
+                        current_cell,
+                        current_cell + row_length,
+                        risk_levels[row_index + 1][column_index],
+                    )
                 )
 
-    return paths
+    return edges
 
 
-def path_dict_to_path(start: int, end: int, path_dict: dict[int, Edge]) -> list[Edge]:
-    if not path_dict:
-        return []
-
-    edge_path: list[Edge] = []
-    edge: Edge = path_dict[end]
-    edge_path.append(edge)
-
-    while edge.start != start:
-        edge = path_dict[edge.start]
-        edge_path.append(edge)
-
-    return list(reversed(edge_path))
-
-
-def get_risk_graph(edges: list[tuple[str, str, int]], vertices: list[str]) -> Graph:
-    graph = Graph(vertices)
+def get_risk_graph(edges: list[tuple[int, int, int]], vertex_count: int) -> RiskGraph:
+    graph = RiskGraph(vertex_count)
 
     for edge in edges:
         graph.add_edge(edge[0], edge[1], edge[2])
@@ -167,24 +125,56 @@ def get_risk_graph(edges: list[tuple[str, str, int]], vertices: list[str]) -> Gr
     return graph
 
 
-def get_total_least_risk(graph: Graph, vertices: list[str]) -> int:
-    start = vertices[0]
-    end = vertices[-1]
+def increase_risk(risk_levels: list[list[int]]) -> list[list[int]]:
+    increased_risk_levels: list[list[int]] = []
 
-    shortest_path = path_dict_to_path(
-        graph.index_of(start),
-        graph.index_of(end),
-        find_shortest_path(graph, start),
-    )
+    for row in risk_levels:
+        new_row: list[int] = [0] * len(row)
 
-    return sum(edge.risk for edge in shortest_path)
+        for column_index, cell in enumerate(row):
+            new_row[column_index] = cell + 1 if cell < 9 else 1
+
+        increased_risk_levels.append(new_row)
+
+    return increased_risk_levels
+
+
+def get_full_risk_levels(risk_levels: list[list[int]]) -> list[list[int]]:
+    risk_levels_list: list[list[list[int]]] = [risk_levels]
+
+    for index in range(9):
+        risk_levels_list.append(increase_risk(risk_levels_list[index]))
+
+    full_risk_levels: list[list[int]] = []
+
+    for row_increase_index in range(5):
+        for row_index in range(len(risk_levels)):
+            new_row: list[int] = []
+
+            for column_increase_index in range(5):
+                increase_level: int = row_increase_index + column_increase_index
+
+                for column_index in range(len(risk_levels[0])):
+                    new_row.append(
+                        risk_levels_list[increase_level][row_index][column_index]
+                    )
+
+            full_risk_levels.append(new_row)
+
+    return full_risk_levels
 
 
 if __name__ == "__main__":
+    input_array: list[list[int]] = read_input_as_2d_int_array("input.txt")
+    number_of_vertices = len(input_array) * len(input_array[0])
+
     # Part One
-    input_edges, input_vertices = read_input("input.txt")
+    risk_graph: RiskGraph = get_risk_graph(get_edges(input_array), number_of_vertices)
+    print(f"The total least risk is {risk_graph.get_total_least_risk()}.")
 
-    risk_graph = get_risk_graph(input_edges, input_vertices)
-    total_least_risk = get_total_least_risk(risk_graph, input_vertices)
-
-    print(f"The total least risk is {total_least_risk}.")
+    # Part Two
+    full_input_array: list[list[int]] = get_full_risk_levels(input_array)
+    full_risk_graph: RiskGraph = get_risk_graph(
+        get_edges(full_input_array), number_of_vertices * 25
+    )
+    print(f"The full total least risk is {full_risk_graph.get_total_least_risk()}.")
