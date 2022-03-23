@@ -37,7 +37,7 @@ The total risk of this path is 40 (the starting position is never entered, so it
 
 What is the lowest total risk of any path from the top left to the bottom right?
 
-##--- Part Two ---
+## --- Part Two ---
 Now that you know how to find low-risk paths in the cave, you can try to find your way out.
 
 The entire cave is actually five times larger in both dimensions than you thought; the area you originally scanned is just one tile in a 5x5 tile area that forms the full map. Your original map tile repeats to the right and downward; each time the tile repeats to the right or downward, all of its risk levels are 1 higher than the tile immediately up or left of it. However, risk levels above 9 wrap back around to 1. So, if your original map had some position with a risk level of 8, then that same position on each of the 25 total tiles would be as follows:
