@@ -1,7 +1,8 @@
 from dataclasses import dataclass
 from enum import Enum
 
-from helpers import clean_line, Point2D
+from helpers import Point2D
+from helpers import clean_line
 
 
 class Direction(Enum):
@@ -19,7 +20,7 @@ class Command:
 def read_input(filename: str) -> list[Command]:
     input_commands: list[Command] = []
 
-    with open(filename, "r", encoding="utf-8") as lines:
+    with open(filename, encoding="utf-8") as lines:
         for line in lines:
             direction_string, distance_string = clean_line(line).split(" ")
             input_commands.append(
@@ -64,11 +65,13 @@ if __name__ == "__main__":
     commands: list[Command] = read_input("input.txt")
     end_location: Point2D = plot_movement(commands)
     print(
-        f"Final horizontal position x final depth = {abs(end_location.x * end_location.y)}"
+        f"Final horizontal position x final depth = "
+        f"{abs(end_location.x * end_location.y)}"
     )
 
     # Part Two
     end_location_with_aim: Point2D = plot_movement_with_aim(commands)
     print(
-        f"Using aim, final horizontal position x final depth = {abs(end_location_with_aim.x * end_location_with_aim.y)}"
+        f"Using aim, final horizontal position x final depth = "
+        f"{abs(end_location_with_aim.x * end_location_with_aim.y)}"
     )

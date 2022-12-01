@@ -38,5 +38,6 @@ if __name__ == "__main__":
     # Part Two
     depth_sums: list[int] = apply_sliding_window(depths, 3)
     print(
-        f"The depth (using a sliding window) increased {count_larger_depths(depth_sums)} times."
+        f"The depth (using a sliding window) increased "
+        f"{count_larger_depths(depth_sums)} times."
     )

@@ -5,7 +5,7 @@ def read_input(filename: str) -> tuple[list[list[str]], list[list[str]]]:
     input_signal_patterns: list[list[str]] = []
     input_output_values: list[list[str]] = []
 
-    with open(filename, "r", encoding="utf-8") as file_lines:
+    with open(filename, encoding="utf-8") as file_lines:
         for file_line in file_lines:
             clean_file_line = clean_line(file_line).strip()
 
@@ -169,7 +169,7 @@ if __name__ == "__main__":
 
     for output_value in output_values:
         for value in output_value:
-            if len(value) in [2, 3, 4, 7]:
+            if len(value) in {2, 3, 4, 7}:
                 count1478 += 1
 
     print(f"The digits 1, 4, 7, or 8 appear {count1478} times.")

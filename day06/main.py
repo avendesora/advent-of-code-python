@@ -68,22 +68,22 @@ if __name__ == "__main__":
 
     number_of_days = 80
 
-    for day in range(number_of_days):
+    for _ in range(number_of_days):
         school = grow_one_day(school)
-        # print(f"After {day + 1} day(s): {school}")
 
     print(
-        f"There are a total of {len(school)} fish in the school after {number_of_days} days."
+        f"There are a total of {len(school)} fish in the school after "
+        f"{number_of_days} days."
     )
 
     # Part Two
     school_dict = initialize_school_dict(original_school)
     number_of_days2 = 256
 
-    for day in range(number_of_days2):
+    for _ in range(number_of_days2):
         school_dict = update_school_dict(school_dict)
-        # print(f"After {day + 1} days(s): {school_dict}")
 
     print(
-        f"There are a total of {sum(school_dict.values())} fish in the school after {number_of_days2} days."
+        f"There are a total of {sum(school_dict.values())} fish in the school after "
+        f"{number_of_days2} days."
     )

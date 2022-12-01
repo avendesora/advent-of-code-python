@@ -1,8 +1,8 @@
 import pytest
 
 
-@pytest.fixture
-def sample_data():
+@pytest.fixture()
+def sample_data() -> tuple[str, dict[str, str]]:
     return (
         "NNCB",
         {
@@ -26,8 +26,8 @@ def sample_data():
     )
 
 
-@pytest.fixture
-def pairs():
+@pytest.fixture()
+def pairs() -> dict[str, int]:
     return {
         "CB": 1,
         "NC": 1,

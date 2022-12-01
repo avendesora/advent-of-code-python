@@ -15,4 +15,3 @@ It worked great for the sample input, but kept giving me the wrong answer for th
 The distance from A to B is the same as the distance from B to A. The implementation assumed that, and when adding an edge (e.g. (A, B, 3)) it would also add the reverse of that edge (e.g. (B, A, 3)). Knowing that it added the reverse, I only added the edges for moving "right" and "down" in the map, since the reverse "left" and "up" would be added automatically.
 
 However, the risk level when moving from A to B is not necessarily the same as the risk level when moving from B to A, so I removed that line that automatically added the reverse edge, and I explicitly added the "left" and "up" edges with the appropriate risk levels. Then the computed least total risk level was correct.
-

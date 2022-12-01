@@ -1,6 +1,8 @@
 from enum import Enum
 
-from helpers import clean_line, Point2D, transpose_2d_array
+from helpers import Point2D
+from helpers import clean_line
+from helpers import transpose_2d_array
 
 
 class Axis(Enum):
@@ -13,7 +15,7 @@ def read_input(filename: str) -> tuple[list[Point2D], list[tuple[Axis, int]]]:
     input_dots: list[Point2D] = []
     input_instructions: list[tuple[Axis, int]] = []
 
-    with open(filename, "r", encoding="utf-8") as lines:
+    with open(filename, encoding="utf-8") as lines:
         for line in lines:
             cleaned_line = clean_line(line).strip()
 
@@ -50,11 +52,11 @@ def initialize_pattern(input_dots: list[Point2D]) -> list[list[bool]]:
     return initial_pattern
 
 
-def fold_x(pattern_to_fold: list[list[bool]], value) -> list[list[bool]]:
+def fold_x(pattern_to_fold: list[list[bool]], value: int) -> list[list[bool]]:
     return transpose_2d_array(fold_y(transpose_2d_array(pattern_to_fold), value))
 
 
-def fold_y(pattern_to_fold: list[list[bool]], value) -> list[list[bool]]:
+def fold_y(pattern_to_fold: list[list[bool]], value: int) -> list[list[bool]]:
     folded_pattern: list[list[bool]] = []
 
     for row_index, row in enumerate(pattern_to_fold):
@@ -100,12 +102,7 @@ def printable_pattern(
 
 
 def count_visible_dots(current_pattern: list[list[bool]]) -> int:
-    dot_count: int = 0
-
-    for row in current_pattern:
-        dot_count += row.count(True)
-
-    return dot_count
+    return sum(row.count(True) for row in current_pattern)
 
 
 if __name__ == "__main__":
@@ -113,7 +110,7 @@ if __name__ == "__main__":
     dots, instructions = read_input("input.txt")
     pattern: list[list[bool]] = initialize_pattern(dots)
 
-    for instruction in instructions[0:1]:
+    for instruction in instructions[:1]:
         pattern = execute_instruction(pattern, instruction)
 
     print(f"There are currently {count_visible_dots(pattern)} dots visible.")

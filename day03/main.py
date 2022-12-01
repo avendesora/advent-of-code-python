@@ -1,6 +1,8 @@
-from statistics import median, mode
+from statistics import median
+from statistics import mode
 
-from helpers import read_input_as_2d_int_array, transpose_2d_array
+from helpers import read_input_as_2d_int_array
+from helpers import transpose_2d_array
 
 
 def read_input(filename: str) -> list[list[int]]:
@@ -30,23 +32,17 @@ def get_oxygen_generator_rating(input_2d_array: list[list[int]]) -> int:
     for counter in range(len(filtered_data)):
         bit_array = filtered_data[counter]
         most_common = 1 if median(bit_array) == 0.5 else mode(bit_array)
-        row_index: int = 0
 
-        for bit in bit_array:
+        for row_index, bit in enumerate(bit_array):
             if bit == most_common:
                 for column_index in range(len(filtered_data)):
                     value: int = filtered_data[column_index][row_index]
-
                     if len(temp_data) <= column_index:
                         temp_data.append([value])
                     else:
                         temp_data[column_index].append(value)
-
-            row_index += 1
-
         filtered_data = temp_data.copy()
         temp_data = []
-
     return int("".join([str(column[0]) for column in filtered_data]), 2)
 
 
@@ -57,26 +53,19 @@ def get_co2_scrubber_rating(input_2d_array: list[list[int]]) -> int:
     for counter in range(len(filtered_data)):
         bit_array = filtered_data[counter]
         most_common = 0 if median(bit_array) == 0.5 else abs(mode(bit_array) - 1)
-        row_index: int = 0
 
-        for bit in bit_array:
+        for row_index, bit in enumerate(bit_array):
             if bit == most_common:
                 for column_index in range(len(filtered_data)):
                     value: int = filtered_data[column_index][row_index]
-
                     if len(temp_data) <= column_index:
                         temp_data.append([value])
                     else:
                         temp_data[column_index].append(value)
-
-            row_index += 1
-
         filtered_data = temp_data.copy()
         temp_data = []
-
         if len(filtered_data[0]) == 1:
             break
-
     return int("".join([str(column[0]) for column in filtered_data]), 2)
 
 

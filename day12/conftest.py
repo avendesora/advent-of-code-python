@@ -1,8 +1,8 @@
 import pytest
 
 
-@pytest.fixture
-def sample_data1():
+@pytest.fixture()
+def sample_data1() -> list[tuple[str, ...]]:
     return [
         ("start", "A"),
         ("start", "b"),
@@ -14,8 +14,8 @@ def sample_data1():
     ]
 
 
-@pytest.fixture
-def sample_data2():
+@pytest.fixture()
+def sample_data2() -> list[tuple[str, ...]]:
     return [
         ("dc", "end"),
         ("HN", "start"),
@@ -30,8 +30,8 @@ def sample_data2():
     ]
 
 
-@pytest.fixture
-def sample_data3():
+@pytest.fixture()
+def sample_data3() -> list[tuple[str, ...]]:
     return [
         ("fs", "end"),
         ("he", "DX"),
@@ -54,8 +54,8 @@ def sample_data3():
     ]
 
 
-@pytest.fixture
-def valid_paths1():
+@pytest.fixture()
+def valid_paths1() -> set[str]:
     return {
         "start, A, b, A, c, A, end",
         "start, A, b, A, end",
@@ -70,8 +70,8 @@ def valid_paths1():
     }
 
 
-@pytest.fixture
-def valid_paths2():
+@pytest.fixture()
+def valid_paths2() -> set[str]:
     return {
         "start, HN, dc, HN, end",
         "start, HN, dc, HN, kj, HN, end",
@@ -95,8 +95,8 @@ def valid_paths2():
     }
 
 
-@pytest.fixture
-def valid_paths1b():
+@pytest.fixture()
+def valid_paths1b() -> set[str]:
     return {
         "start, A, b, A, b, A, c, A, end",
         "start, A, b, A, b, A, end",

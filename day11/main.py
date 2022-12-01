@@ -18,36 +18,62 @@ def take_step(energy_levels: list[list[int]]) -> list[list[int]]:
     return energy_levels
 
 
-def _flash(energy_levels: list[list[int]], row_index, column_index) -> list[list[int]]:
+def _flash(
+    energy_levels: list[list[int]],
+    row_index: int,
+    column_index: int,
+) -> list[list[int]]:
     if energy_levels[row_index][column_index] != 10:
         return energy_levels
 
     energy_levels[row_index][column_index] += 1
 
     energy_levels = _increase_adjacent_cell(
-        energy_levels, row_index - 1, column_index - 1
+        energy_levels,
+        row_index - 1,
+        column_index - 1,
     )
-    energy_levels = _increase_adjacent_cell(energy_levels, row_index - 1, column_index)
     energy_levels = _increase_adjacent_cell(
-        energy_levels, row_index - 1, column_index + 1
+        energy_levels,
+        row_index - 1,
+        column_index,
     )
-
-    energy_levels = _increase_adjacent_cell(energy_levels, row_index, column_index - 1)
-    energy_levels = _increase_adjacent_cell(energy_levels, row_index, column_index + 1)
-
     energy_levels = _increase_adjacent_cell(
-        energy_levels, row_index + 1, column_index - 1
+        energy_levels,
+        row_index - 1,
+        column_index + 1,
     )
-    energy_levels = _increase_adjacent_cell(energy_levels, row_index + 1, column_index)
     energy_levels = _increase_adjacent_cell(
-        energy_levels, row_index + 1, column_index + 1
+        energy_levels,
+        row_index,
+        column_index - 1,
     )
-
-    return energy_levels
+    energy_levels = _increase_adjacent_cell(
+        energy_levels,
+        row_index,
+        column_index + 1,
+    )
+    energy_levels = _increase_adjacent_cell(
+        energy_levels,
+        row_index + 1,
+        column_index - 1,
+    )
+    energy_levels = _increase_adjacent_cell(
+        energy_levels,
+        row_index + 1,
+        column_index,
+    )
+    return _increase_adjacent_cell(
+        energy_levels,
+        row_index + 1,
+        column_index + 1,
+    )
 
 
 def _increase_adjacent_cell(
-    energy_levels: list[list[int]], row_index, column_index
+    energy_levels: list[list[int]],
+    row_index: int,
+    column_index: int,
 ) -> list[list[int]]:
     if row_index < 0 or column_index < 0:
         return energy_levels
@@ -98,7 +124,8 @@ if __name__ == "__main__":
         read_input_as_2d_int_array("input.txt"), number_of_steps
     )
     print(
-        f"After {number_of_steps} steps, there have been a total of {number_of_flashes} flashes."
+        f"After {number_of_steps} steps, there have been a total of "
+        f"{number_of_flashes} flashes."
     )
 
     # Part Two

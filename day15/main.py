@@ -1,9 +1,10 @@
 from __future__ import annotations
 
+import itertools
 from contextlib import suppress
 from dataclasses import dataclass
-from heapq import heappop, heappush
-from typing import Optional
+from heapq import heappop
+from heapq import heappush
 
 from helpers import read_input_as_2d_int_array
 
@@ -13,16 +14,16 @@ class Node:
     vertex: int
     risk: int
 
-    def __lt__(self, other: Node) -> bool:
+    def __lt__(self: Node, other: Node) -> bool:
         return self.risk < other.risk
 
 
 class RiskGraph:
-    def __init__(self, vertex_count: int = 0) -> None:
+    def __init__(self: RiskGraph, vertex_count: int = 0) -> None:
         self._edges: list[list[dict[str, int]]] = [[] for _ in range(vertex_count)]
         self.vertex_count = vertex_count
 
-    def add_edge(self, start: int, end: int, risk: int) -> None:
+    def add_edge(self: RiskGraph, start: int, end: int, risk: int) -> None:
         edge: dict[str, int] = {
             "start": start,
             "end": end,
@@ -30,11 +31,11 @@ class RiskGraph:
         }
         self._edges[edge["start"]].append(edge)
 
-    def _edges_for_index(self, index: int) -> list[dict[str, int]]:
+    def _edges_for_index(self: RiskGraph, index: int) -> list[dict[str, int]]:
         return self._edges[index]
 
-    def _find_shortest_path(self, start: int) -> dict[int, dict[str, int]]:
-        risks: list[Optional[int]] = [None] * self.vertex_count
+    def _find_shortest_path(self: RiskGraph, start: int) -> dict[int, dict[str, int]]:
+        risks: list[int | None] = [None] * self.vertex_count
         risks[start] = 0
         paths: dict[int, dict[str, int]] = {}
         priority_queue: list[Node] = []
@@ -45,7 +46,7 @@ class RiskGraph:
             risk_start: int = risks[start] or 0
 
             for weighted_edge in self._edges_for_index(start):
-                risk_end: Optional[int] = risks[weighted_edge["end"]]
+                risk_end: int | None = risks[weighted_edge["end"]]
 
                 if risk_end is None or risk_end > weighted_edge["risk"] + risk_start:
                     risks[weighted_edge["end"]] = weighted_edge["risk"] + risk_start
@@ -57,7 +58,7 @@ class RiskGraph:
 
         return paths
 
-    def get_total_least_risk(self) -> int:
+    def get_total_least_risk(self: RiskGraph) -> int:
         shortest_path = self._find_shortest_path(0)
         edge: dict[str, int] = shortest_path[self.vertex_count - 1]
         total_risk = edge["risk"]
@@ -141,25 +142,24 @@ def increase_risk(risk_levels: list[list[int]]) -> list[list[int]]:
 
 def get_full_risk_levels(risk_levels: list[list[int]]) -> list[list[int]]:
     risk_levels_list: list[list[list[int]]] = [risk_levels]
-
-    for index in range(9):
-        risk_levels_list.append(increase_risk(risk_levels_list[index]))
-
+    risk_levels_list.extend(
+        increase_risk(risk_levels_list[index]) for index in range(9)
+    )
     full_risk_levels: list[list[int]] = []
 
-    for row_increase_index in range(5):
-        for row_index in range(len(risk_levels)):
-            new_row: list[int] = []
+    for row_increase_index, row_index in itertools.product(
+        range(5), range(len(risk_levels))
+    ):
+        new_row: list[int] = []
 
-            for column_increase_index in range(5):
-                increase_level: int = row_increase_index + column_increase_index
+        for column_increase_index in range(5):
+            increase_level: int = row_increase_index + column_increase_index
+            new_row.extend(
+                risk_levels_list[increase_level][row_index][column_index]
+                for column_index in range(len(risk_levels[0]))
+            )
 
-                for column_index in range(len(risk_levels[0])):
-                    new_row.append(
-                        risk_levels_list[increase_level][row_index][column_index]
-                    )
-
-            full_risk_levels.append(new_row)
+        full_risk_levels.append(new_row)
 
     return full_risk_levels
 

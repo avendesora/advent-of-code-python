@@ -1,16 +1,10 @@
 from functools import lru_cache
-from statistics import mean, median, mode
 
 from helpers import read_input_as_int_array_from_csv
 
 
 def calculate_fuel(positions: list[int], target_position: int) -> int:
-    fuel_consumption: int = 0
-
-    for position in positions:
-        fuel_consumption += abs(position - target_position)
-
-    return fuel_consumption
+    return sum(abs(position - target_position) for position in positions)
 
 
 def calculate_fuel2(positions: list[int], target_position: int) -> int:
@@ -37,15 +31,18 @@ if __name__ == "__main__":
     # Part One
     # mode_position: int = int(mode(original_positions))
     # print(
-    #     f"It will take {calculate_fuel(original_positions, mode_position)} fuel to align to position {mode_position}."
+    #     f"It will take {calculate_fuel(original_positions, mode_position)} "
+    #     f"fuel to align to position {mode_position}."
     # )
     # mean_position: int = int(mean(original_positions))
     # print(
-    #     f"It will take {calculate_fuel(original_positions, mean_position)} fuel to align to position {mean_position}."
+    #     f"It will take {calculate_fuel(original_positions, mean_position)} "
+    #     f"fuel to align to position {mean_position}."
     # )
     # median_position: int = int(median(original_positions))
     # print(
-    #     f"It will take {calculate_fuel(original_positions, median_position)} fuel to align to position {median_position}."
+    #     f"It will take {calculate_fuel(original_positions, median_position)} "
+    #     f"fuel to align to position {median_position}."
     # )
 
     best_position: int = 0
@@ -65,15 +62,18 @@ if __name__ == "__main__":
     # Part Two
     # mode_position = int(mode(original_positions))
     # print(
-    #     f"It will take {calculate_fuel2(original_positions, mode_position)} fuel to align to position {mode_position}."
+    #     f"It will take {calculate_fuel2(original_positions, mode_position)} "
+    #     f"fuel to align to position {mode_position}."
     # )
     # mean_position = int(mean(original_positions))
     # print(
-    #     f"It will take {calculate_fuel2(original_positions, mean_position)} fuel to align to position {mean_position}."
+    #     f"It will take {calculate_fuel2(original_positions, mean_position)} "
+    #     f"fuel to align to position {mean_position}."
     # )
     # median_position = int(median(original_positions))
     # print(
-    #     f"It will take {calculate_fuel2(original_positions, median_position)} fuel to align to position {median_position}."
+    #     f"It will take {calculate_fuel2(original_positions, median_position)} "
+    #     f"fuel to align to position {median_position}."
     # )
 
     best_position = 0

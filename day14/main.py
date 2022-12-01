@@ -6,7 +6,7 @@ def read_input(filename: str) -> tuple[str, dict[str, str]]:
     pair_insertion_rules_input: dict[str, str] = {}
     blank_line_found: bool = False
 
-    with open(filename, "r", encoding="utf-8") as lines:
+    with open(filename, encoding="utf-8") as lines:
         for line in lines:
             cleaned_line = clean_line(line).strip()
 

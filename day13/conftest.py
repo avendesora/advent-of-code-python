@@ -1,11 +1,11 @@
 import pytest
 
+from day13.main import Axis
 from helpers import Point2D
-from .main import Axis
 
 
-@pytest.fixture
-def sample_data():
+@pytest.fixture()
+def sample_data() -> tuple[list[Point2D], list[tuple[Axis, int]]]:
     return (
         [
             Point2D(6, 10),
@@ -34,8 +34,8 @@ def sample_data():
     )
 
 
-@pytest.fixture
-def initial_pattern():
+@pytest.fixture()
+def initial_pattern() -> list[list[bool]]:
     return [
         [False, False, False, True, False, False, True, False, False, True, False],
         [False, False, False, False, True, False, False, False, False, False, False],
@@ -55,7 +55,7 @@ def initial_pattern():
     ]
 
 
-@pytest.fixture
+@pytest.fixture()
 def pattern_string() -> str:
     return """...#..#..#.
 ....#......
@@ -75,8 +75,8 @@ def pattern_string() -> str:
 """
 
 
-@pytest.fixture
-def folded_pattern_y():
+@pytest.fixture()
+def folded_pattern_y() -> list[list[bool]]:
     return [
         [True, False, True, True, False, False, True, False, False, True, False],
         [True, False, False, False, True, False, False, False, False, False, False],
@@ -88,7 +88,7 @@ def folded_pattern_y():
     ]
 
 
-@pytest.fixture
+@pytest.fixture()
 def folded_pattern_y_string() -> str:
     return """#.##..#..#.
 #...#......
@@ -100,8 +100,8 @@ def folded_pattern_y_string() -> str:
 """
 
 
-@pytest.fixture
-def folded_pattern_x():
+@pytest.fixture()
+def folded_pattern_x() -> list[list[bool]]:
     return [
         [True, True, True, True, True],
         [True, False, False, False, True],
@@ -113,7 +113,7 @@ def folded_pattern_x():
     ]
 
 
-@pytest.fixture
+@pytest.fixture()
 def folded_pattern_x_string() -> str:
     return """#####
 #...#

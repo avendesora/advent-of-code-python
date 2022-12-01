@@ -1,6 +1,7 @@
 from itertools import chain
 
-from helpers import clean_line, transpose_2d_array
+from helpers import clean_line
+from helpers import transpose_2d_array
 
 
 def read_input(filename: str) -> tuple[list[int], list[list[list[int]]]]:
@@ -8,7 +9,7 @@ def read_input(filename: str) -> tuple[list[int], list[list[list[int]]]]:
     bingo_boards: list[list[list[int]]] = []
     current_board: list[list[int]] = []
 
-    with open(filename, "r", encoding="utf-8") as lines:
+    with open(filename, encoding="utf-8") as lines:
         for line in lines:
             if len(clean_line(line).strip()) == 0:
                 continue
@@ -38,20 +39,7 @@ def update_board(bingo_board: list[list[int]], call_number: int) -> list[list[in
 
 
 def check_board(bingo_board: list[list[int]]) -> bool:
-    if _check_rows(bingo_board):
-        return True
-
-    if _check_columns(bingo_board):
-        return True
-
-    # Diagonals don't count
-    # if sum([bingo_board[0][0], bingo_board[1][1], bingo_board[2][2], bingo_board[3][3], bingo_board[4][4]]) == -5:
-    #     return True
-    #
-    # if sum([bingo_board[4][0], bingo_board[3][1], bingo_board[2][2], bingo_board[1][3], bingo_board[0][4]]) == -5:
-    #     return True
-
-    return False
+    return True if _check_rows(bingo_board) else bool(_check_columns(bingo_board))
 
 
 def _check_rows(bingo_board: list[list[int]]) -> bool:

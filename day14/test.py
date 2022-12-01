@@ -1,20 +1,18 @@
-from day14.main import (
-    apply_rules,
-    evaluate_counts,
-    evaluate_counts_part_two,
-    get_character_counts,
-    get_distinct_characters,
-    get_pairs_from_polymer,
-    read_input,
-    update_pairs,
-)
+from day14.main import apply_rules
+from day14.main import evaluate_counts
+from day14.main import evaluate_counts_part_two
+from day14.main import get_character_counts
+from day14.main import get_distinct_characters
+from day14.main import get_pairs_from_polymer
+from day14.main import read_input
+from day14.main import update_pairs
 
 
-def test_day_14_read_input(sample_data):
+def test_day_14_read_input(sample_data: tuple[str, dict[str, str]]) -> None:
     assert read_input("sample_input.txt") == sample_data
 
 
-def test_apply_rules(sample_data):
+def test_apply_rules(sample_data: tuple[str, dict[str, str]]) -> None:
     polymer_template, pair_insertion_rules = sample_data
     polymer_step_1 = apply_rules(polymer_template, pair_insertion_rules)
 
@@ -33,7 +31,7 @@ def test_apply_rules(sample_data):
     assert polymer_step_4 == "NBBNBNBBCCNBCNCCNBBNBBNBBBNBBNBBCBHCBHHNHCBBCBHCB"
 
 
-def test_evaluate_counts(sample_data):
+def test_evaluate_counts(sample_data: tuple[str, dict[str, str]]) -> None:
     polymer, rules = sample_data
     characters = get_distinct_characters(polymer, rules)
 
@@ -54,14 +52,20 @@ def test_evaluate_counts(sample_data):
     assert most_common_quantity - least_common_quantity == 1588
 
 
-def test_get_pairs_from_polymer(sample_data, pairs):
+def test_get_pairs_from_polymer(
+    sample_data: tuple[str, dict[str, str]],
+    pairs: dict[str, int],
+) -> None:
     polymer, _ = sample_data
     actual_pairs = get_pairs_from_polymer(polymer)
 
     assert actual_pairs == pairs
 
 
-def test_update_pairs(sample_data, pairs):
+def test_update_pairs(
+    sample_data: tuple[str, dict[str, str]],
+    pairs: dict[str, int],
+) -> None:
     polymer, rules = sample_data
     pairs0 = get_pairs_from_polymer(polymer)
 
@@ -86,7 +90,7 @@ def test_update_pairs(sample_data, pairs):
     )
 
 
-def test_get_character_counts(sample_data):
+def test_get_character_counts(sample_data: tuple[str, dict[str, str]]) -> None:
     polymer, rules = sample_data
     pairs = get_pairs_from_polymer(polymer)
 
@@ -101,7 +105,7 @@ def test_get_character_counts(sample_data):
     assert character_counts["N"] == 865
 
 
-def test_get_character_counts_part_two(sample_data):
+def test_get_character_counts_part_two(sample_data: tuple[str, dict[str, str]]) -> None:
     polymer, rules = sample_data
     pairs = get_pairs_from_polymer(polymer)
 
@@ -114,7 +118,7 @@ def test_get_character_counts_part_two(sample_data):
     assert character_counts["H"] == 3849876073
 
 
-def test_evaluate_counts_part_two(sample_data):
+def test_evaluate_counts_part_two(sample_data: tuple[str, dict[str, str]]) -> None:
     polymer, rules = sample_data
     pairs = get_pairs_from_polymer(polymer)
 

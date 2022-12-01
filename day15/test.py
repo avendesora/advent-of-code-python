@@ -1,21 +1,26 @@
+from day15.main import get_edges
+from day15.main import get_full_risk_levels
+from day15.main import get_risk_graph
+from day15.main import increase_risk
 from helpers import read_input_as_2d_int_array
 
-from day15.main import get_edges, get_full_risk_levels, get_risk_graph, increase_risk
 
-
-def test_day_15_read_input(input_array):
+def test_day_15_read_input(input_array: list[list[int]]) -> None:
     risk_levels = read_input_as_2d_int_array("sample_input.txt")
 
     assert risk_levels == input_array
 
 
-def test_get_edges(input_array, edges):
+def test_get_edges(
+    input_array: list[list[int]],
+    edges: list[tuple[int, int, int]],
+) -> None:
     input_edges = get_edges(input_array)
 
     assert input_edges == edges
 
 
-def test_get_total_least_risk(edges):
+def test_get_total_least_risk(edges: list[tuple[int, int, int]]) -> None:
     graph = get_risk_graph(edges, 100)
     lowest_total_risk = graph.get_total_least_risk()
 
@@ -23,8 +28,10 @@ def test_get_total_least_risk(edges):
 
 
 def test_increase_risk(
-    input_array, input_array_increased_once, input_array_increased_twice
-):
+    input_array: list[list[int]],
+    input_array_increased_once: list[list[int]],
+    input_array_increased_twice: list[list[int]],
+) -> None:
     risk_levels_increased_once = increase_risk(input_array)
 
     assert risk_levels_increased_once == input_array_increased_once
@@ -34,7 +41,7 @@ def test_increase_risk(
     assert risk_levels_increased_twice == input_array_increased_twice
 
 
-def test_get_full_risk_levels():
+def test_get_full_risk_levels() -> None:
     risk_levels = read_input_as_2d_int_array("sample_input.txt")
     expected_full_risk_levels = read_input_as_2d_int_array("full_sample_input.txt")
     actual_full_risk_levels = get_full_risk_levels(risk_levels)
@@ -42,7 +49,7 @@ def test_get_full_risk_levels():
     assert actual_full_risk_levels == expected_full_risk_levels
 
 
-def test_get_total_least_risk_full_risk_levels():
+def test_get_total_least_risk_full_risk_levels() -> None:
     risk_levels = read_input_as_2d_int_array("sample_input.txt")
     full_risk_levels = get_full_risk_levels(risk_levels)
     edges = get_edges(full_risk_levels)

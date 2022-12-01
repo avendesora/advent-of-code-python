@@ -1,13 +1,11 @@
-from day11.main import (
-    count_flashes,
-    find_first_simultaneous_flash,
-    take_step,
-    take_steps,
-)
+from day11.main import count_flashes
+from day11.main import find_first_simultaneous_flash
+from day11.main import take_step
+from day11.main import take_steps
 from helpers import read_input_as_2d_int_array
 
 
-def test_day_11_read_input():
+def test_day_11_read_input() -> None:
     sample_input = read_input_as_2d_int_array("sample_input.txt")
     assert sample_input == [
         [5, 4, 8, 3, 1, 4, 3, 2, 2, 3],
@@ -23,7 +21,7 @@ def test_day_11_read_input():
     ]
 
 
-def test_day_11_part_one():
+def test_day_11_part_one() -> None:
     step1 = take_step(read_input_as_2d_int_array("sample_input.txt"))
     assert step1 == [
         [6, 5, 9, 4, 2, 5, 4, 3, 3, 4],
@@ -79,6 +77,6 @@ def test_day_11_part_one():
     assert take_steps(read_input_as_2d_int_array("sample_input.txt"), 100) == 1656
 
 
-def test_day_11_part_two():
+def test_day_11_part_two() -> None:
     sample_input = read_input_as_2d_int_array("sample_input.txt")
     assert find_first_simultaneous_flash(sample_input) == 195

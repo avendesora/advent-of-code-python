@@ -1,7 +1,9 @@
 from dataclasses import dataclass
 from itertools import chain
+from itertools import product
 
-from helpers import clean_line, Point2D
+from helpers import Point2D
+from helpers import clean_line
 
 
 @dataclass
@@ -13,14 +15,14 @@ class Line:
 def read_input(filename: str) -> list[Line]:
     input_lines: list[Line] = []
 
-    with open(filename, "r", encoding="utf-8") as file_lines:
+    with open(filename, encoding="utf-8") as file_lines:
         for file_line in file_lines:
             if len(clean_line(file_line).strip()) == 0:
                 continue
 
             start, end = clean_line(file_line).strip().split(" -> ")
-            start_x, start_y = [int(value) for value in start.split(",")]
-            end_x, end_y = [int(value) for value in end.split(",")]
+            start_x, start_y = (int(value) for value in start.split(","))
+            end_x, end_y = (int(value) for value in end.split(","))
 
             # Horizontal and Vertical Lines
             if start_x == end_x or start_y == end_y:
@@ -37,7 +39,7 @@ def read_input(filename: str) -> list[Line]:
     return input_lines
 
 
-def _is_diagonal(start_x, start_y, end_x, end_y):
+def _is_diagonal(start_x: int, start_y: int, end_x: int, end_y: int) -> bool:
     return abs(start_x - end_x) == abs(start_y - end_y)
 
 
@@ -46,13 +48,18 @@ def plot_horizontal_and_vertical_lines(input_lines: list[Line]) -> list[list[int
 
     for input_line in input_lines:
         if _is_diagonal(
-            input_line.start.x, input_line.start.y, input_line.end.x, input_line.end.y
+            input_line.start.x,
+            input_line.start.y,
+            input_line.end.x,
+            input_line.end.y,
         ):
             continue
 
-        for row_index in range(input_line.start.y, input_line.end.y + 1):
-            for column_index in range(input_line.start.x, input_line.end.x + 1):
-                line_graph[row_index][column_index] += 1
+        for row_index, column_index in product(
+            range(input_line.start.y, input_line.end.y + 1),
+            range(input_line.start.x, input_line.end.x + 1),
+        ):
+            line_graph[row_index][column_index] += 1
 
     return line_graph
 
@@ -74,12 +81,7 @@ def _initialize_line_graph(input_lines: list[Line]) -> list[list[int]]:
         if input_line.start.y + 1 > max_y:
             max_y = input_line.start.y + 1
 
-    line_graph: list[list[int]] = []
-
-    for _ in range(max_y):
-        line_graph.append([0] * max_x)
-
-    return line_graph
+    return [[0] * max_x for _ in range(max_y)]
 
 
 def plot_lines(
@@ -126,7 +128,12 @@ def _get_increment_start_and_end(start: int, end: int) -> tuple[int, int, int]:
     return (1, start, end + 1) if start < end else (-1, start, end - 1)
 
 
-def _get_coordinate_list(start, end, increment, length) -> list[int]:
+def _get_coordinate_list(
+    start: int,
+    end: int,
+    increment: int,
+    length: int,
+) -> list[int]:
     if start == end:
         return [start] * (length + 1)
 
@@ -147,7 +154,8 @@ if __name__ == "__main__":
     #     print(plot_line)
 
     print(
-        f"There are {count_intersections(plot)} points where at least two lines overlap."
+        f"There are {count_intersections(plot)} points where at least two lines "
+        f"overlap."
     )
 
     # Part Two
@@ -157,5 +165,6 @@ if __name__ == "__main__":
     #     print(plot_line)
 
     print(
-        f"There are {count_intersections(plot2)} points where at least two lines overlap."
+        f"There are {count_intersections(plot2)} points where at least two lines "
+        f"overlap."
     )

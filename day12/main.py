@@ -11,7 +11,7 @@ class GraphNode:
 
 
 def read_input(filename: str) -> list[tuple[str, ...]]:
-    with open(filename, "r", encoding="utf-8") as lines:
+    with open(filename, encoding="utf-8") as lines:
         return [tuple(clean_line(line).split("-")) for line in lines]
 
 
@@ -86,5 +86,6 @@ if __name__ == "__main__":
     # Part Two
     valid_paths2 = find_valid_paths(graph, 2)
     print(
-        f"There are {len(valid_paths2)} valid paths through this cave system with visiting small caves twice at most."
+        f"There are {len(valid_paths2)} valid paths through this cave system with "
+        f"visiting small caves twice at most."
     )
