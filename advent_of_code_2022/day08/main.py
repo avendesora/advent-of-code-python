@@ -31,16 +31,6 @@ def get_views(
     return left, right, top, bottom
 
 
-def is_visible(
-    left: list[int],
-    right: list[int],
-    top: list[int],
-    bottom: list[int],
-    current_height: int,
-) -> bool:
-    return min([max(left), max(right), max(top), max(bottom)]) < current_height
-
-
 def get_scenic_score(view: list[int], current_height: int) -> int:
     return next(
         (
