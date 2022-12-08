@@ -1,18 +1,19 @@
 from dataclasses import dataclass
+from pathlib import Path
 from typing import Any
 
 
-def read_input_as_int_array(filename: str) -> list[int]:
+def read_input_as_int_array(filename: Path | str) -> list[int]:
     with open(filename, encoding="utf-8") as lines:
         return [int(clean_line(line)) for line in lines if clean_line(line).isnumeric()]
 
 
-def read_input_as_int_array_from_csv(filename: str) -> list[int]:
+def read_input_as_int_array_from_csv(filename: Path | str) -> list[int]:
     with open(filename, encoding="utf-8") as file_lines:
         return [int(x) for x in file_lines.readline().split(",")]
 
 
-def read_input_as_2d_int_array(filename: str) -> list[list[int]]:
+def read_input_as_2d_int_array(filename: Path | str) -> list[list[int]]:
     input_2d_array: list[list[int]] = []
 
     with open(filename, encoding="utf-8") as file_lines:
@@ -27,7 +28,7 @@ def read_input_as_2d_int_array(filename: str) -> list[list[int]]:
     return input_2d_array
 
 
-def read_input_as_string_array(filename: str) -> list[str]:
+def read_input_as_string_array(filename: Path | str) -> list[str]:
     with open(filename, encoding="utf-8") as lines:
         return [clean_line(line) for line in lines if clean_line(line)]
 
