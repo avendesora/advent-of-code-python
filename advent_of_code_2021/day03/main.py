@@ -30,13 +30,13 @@ def get_oxygen_generator_rating(input_2d_array: list[list[int]]) -> int:
     filtered_data: list[list[int]] = input_2d_array.copy()
     temp_data: list[list[int]] = []
 
-    for counter in range(len(filtered_data)):
+    for counter, _ in enumerate(filtered_data):
         bit_array = filtered_data[counter]
         most_common = 1 if median(bit_array) == 0.5 else mode(bit_array)
 
         for row_index, bit in enumerate(bit_array):
             if bit == most_common:
-                for column_index in range(len(filtered_data)):
+                for column_index, _ in enumerate(filtered_data):
                     value: int = filtered_data[column_index][row_index]
                     if len(temp_data) <= column_index:
                         temp_data.append([value])
