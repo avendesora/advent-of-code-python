@@ -42,7 +42,7 @@ def get_scenic_score(view: list[int], current_height: int) -> int:
     )
 
 
-def part_one(input_data: list[list[int]]) -> int | None:
+def part_one(input_data: list[list[int]]) -> int:
     visible_count = 0
 
     for row_index, row in enumerate(input_data):
