@@ -16,22 +16,14 @@ class Direction(Enum):
 
     @property
     def x_value(self: Direction) -> int:
-        return DIRECTION_X_Y_VALUES[self][0]
+        return -1 if self == Direction.LEFT else 1 if self == Direction.RIGHT else 0
 
     @property
     def y_value(self: Direction) -> int:
-        return DIRECTION_X_Y_VALUES[self][1]
+        return 1 if self == Direction.UP else -1 if self == Direction.DOWN else 0
 
 
-DIRECTION_X_Y_VALUES: dict[Direction, tuple[int, int]] = {
-    Direction.LEFT: (-1, 0),
-    Direction.RIGHT: (1, 0),
-    Direction.UP: (0, 1),
-    Direction.DOWN: (0, -1),
-}
-
-
-@dataclass
+@dataclass(eq=True, frozen=True)
 class Motion:
     direction: Direction
     number_of_steps: int
@@ -59,16 +51,16 @@ def move_next_knot(previous_knot: Point2D, current_knot: Point2D) -> Point2D:
     new_x = current_knot.x
     new_y = current_knot.y
 
-    if x_diff > 0:
-        if previous_knot.x > current_knot.x:
+    if x_diff > 0:  # Need to move left or right
+        if previous_knot.x > current_knot.x:  # Right
             new_x += 1
-        else:
+        else:  # Left
             new_x -= 1
 
-    if y_diff > 0:
-        if previous_knot.y > current_knot.y:
+    if y_diff > 0:  # Need to move up or down
+        if previous_knot.y > current_knot.y:  # Up
             new_y += 1
-        else:
+        else:  # Down
             new_y -= 1
 
     return Point2D(new_x, new_y)
@@ -76,38 +68,39 @@ def move_next_knot(previous_knot: Point2D, current_knot: Point2D) -> Point2D:
 
 def get_tail_locations(
     input_data: list[Motion], number_of_knots: int = 2
-) -> list[Point2D]:
+) -> set[Point2D]:
     starting_point = Point2D(0, 0)
     knots: list[Point2D] = [starting_point for _ in range(number_of_knots)]
-    tail_locations: list[Point2D] = [starting_point]
+    tail_locations: set[Point2D] = {starting_point}
 
+    # Go through the specified motions
     for motion in input_data:
+        # Move the specified number of steps in the specified direction
         for _ in range(motion.number_of_steps):
+            # Update each knot from the head to the tail
             for index, knot in enumerate(knots):
-                if index == 0:
+                if index == 0:  # Head
                     knot = Point2D(
                         knot.x + motion.direction.x_value,
                         knot.y + motion.direction.y_value,
                     )
-                else:
+                else:  # All other knots
                     knot = move_next_knot(knots[index - 1], knot)
 
                 knots[index] = knot
 
-            if knots[-1] not in tail_locations:
-                tail_locations.append(knots[-1])
+            # Add the tail knot location (the last knot) to the set of tail locations.
+            tail_locations.add(knots[-1])
 
     return tail_locations
 
 
 def part_one(input_data: list[Motion]) -> int:
-    tail_locations = get_tail_locations(input_data)
-    return len(tail_locations)
+    return len(get_tail_locations(input_data))
 
 
 def part_two(input_data: list[Motion]) -> int:
-    tail_locations = get_tail_locations(input_data, 10)
-    return len(tail_locations)
+    return len(get_tail_locations(input_data, 10))
 
 
 if __name__ == "__main__":

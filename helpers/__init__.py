@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 from dataclasses import dataclass
 from pathlib import Path
 from typing import Any
@@ -45,3 +47,6 @@ def transpose_2d_array(input_array: list[list[Any]]) -> list[list[Any]]:
 class Point2D:
     x: int
     y: int
+
+    def __hash__(self: Point2D) -> int:
+        return hash(f"{self.x},{self.y}")
