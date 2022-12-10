@@ -26,6 +26,23 @@ def get_power_consumption(gamma: int, epsilon: int) -> int:
     return gamma * epsilon
 
 
+def filter_data(
+    bit_array: list[int],
+    filtered_data: list[list[int]],
+    most_common: float,
+    temp_data: list[list[int]],
+) -> None:
+    for row_index, bit in enumerate(bit_array):
+        if bit == most_common:
+            for column_index, _ in enumerate(filtered_data):
+                value: int = filtered_data[column_index][row_index]
+
+                if len(temp_data) <= column_index:
+                    temp_data.append([value])
+                else:
+                    temp_data[column_index].append(value)
+
+
 def get_oxygen_generator_rating(input_2d_array: list[list[int]]) -> int:
     filtered_data: list[list[int]] = input_2d_array.copy()
     temp_data: list[list[int]] = []
@@ -33,17 +50,7 @@ def get_oxygen_generator_rating(input_2d_array: list[list[int]]) -> int:
     for counter, _ in enumerate(filtered_data):
         bit_array = filtered_data[counter]
         most_common = 1 if median(bit_array) == 0.5 else mode(bit_array)
-
-        for row_index, bit in enumerate(bit_array):
-            if bit == most_common:
-                for column_index, _ in enumerate(filtered_data):
-                    value: int = filtered_data[column_index][row_index]
-
-                    if len(temp_data) <= column_index:
-                        temp_data.append([value])
-                    else:
-                        temp_data[column_index].append(value)
-
+        filter_data(bit_array, filtered_data, most_common, temp_data)
         filtered_data = temp_data.copy()
         temp_data = []
 
@@ -57,17 +64,7 @@ def get_co2_scrubber_rating(input_2d_array: list[list[int]]) -> int:
     for counter, _ in enumerate(filtered_data):
         bit_array = filtered_data[counter]
         most_common = 0 if median(bit_array) == 0.5 else abs(mode(bit_array) - 1)
-
-        for row_index, bit in enumerate(bit_array):
-            if bit == most_common:
-                for column_index, _ in enumerate(filtered_data):
-                    value: int = filtered_data[column_index][row_index]
-
-                    if len(temp_data) <= column_index:
-                        temp_data.append([value])
-                    else:
-                        temp_data[column_index].append(value)
-
+        filter_data(bit_array, filtered_data, most_common, temp_data)
         filtered_data = temp_data.copy()
         temp_data = []
 

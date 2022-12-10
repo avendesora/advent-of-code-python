@@ -21,40 +21,35 @@ def read_input(filename: Path | str) -> tuple[list[list[str]], list[list[str]]]:
     return input_signal_patterns, input_output_values
 
 
-def get_digits(signal_pattern_entry: list[str]) -> list[str]:
-    segment_1_mappings: set[str] = {"a", "b", "c", "d", "e", "f", "g"}
-    segment_2_mappings: set[str] = {"a", "b", "c", "d", "e", "f", "g"}
-    segment_3_mappings: set[str] = {"a", "b", "c", "d", "e", "f", "g"}
-    segment_4_mappings: set[str] = {"a", "b", "c", "d", "e", "f", "g"}
-    segment_5_mappings: set[str] = {"a", "b", "c", "d", "e", "f", "g"}
-    segment_6_mappings: set[str] = {"a", "b", "c", "d", "e", "f", "g"}
-    segment_7_mappings: set[str] = {"a", "b", "c", "d", "e", "f", "g"}
+SEGMENT_MAPPING: set[str] = {"a", "b", "c", "d", "e", "f", "g"}
 
-    digit_0_mapping: str = ""
-    digit_1_mapping: str = ""
-    digit_2_mapping: str = ""
-    digit_3_mapping: str = ""
-    digit_4_mapping: str = ""
-    digit_5_mapping: str = ""
-    digit_6_mapping: str = ""
-    digit_7_mapping: str = ""
-    digit_8_mapping: str = ""
-    digit_9_mapping: str = ""
 
+def get_segment_mappings(number_of_segments: int) -> list[set[str]]:
+    return [SEGMENT_MAPPING.copy() for _ in range(number_of_segments)]
+
+
+def get_digit_mappings(number_of_digits: int) -> list[str]:
+    return ["" for _ in range(number_of_digits)]
+
+
+def update_digit_mappings(
+    signal_pattern_entry: list[str],
+    digit_mappings: list[str],
+) -> tuple[list[str], list[str]]:
     two_three_five = []
     zero_six_nine = []
 
     for signal_pattern_value in signal_pattern_entry:
         if len(signal_pattern_value) == 2:
-            digit_1_mapping = signal_pattern_value
+            digit_mappings[1] = signal_pattern_value
             continue
 
         if len(signal_pattern_value) == 3:
-            digit_7_mapping = signal_pattern_value
+            digit_mappings[7] = signal_pattern_value
             continue
 
         if len(signal_pattern_value) == 4:
-            digit_4_mapping = signal_pattern_value
+            digit_mappings[4] = signal_pattern_value
             continue
 
         if len(signal_pattern_value) == 5:
@@ -66,107 +61,148 @@ def get_digits(signal_pattern_entry: list[str]) -> list[str]:
             continue
 
         if len(signal_pattern_value) == 7:
-            digit_8_mapping = signal_pattern_value
+            digit_mappings[8] = signal_pattern_value
             continue
 
-    # Digit 1
-    digit_1_set = set(digit_1_mapping)
-    segment_1_mappings = segment_1_mappings.symmetric_difference(digit_1_set)
-    segment_2_mappings = segment_2_mappings.symmetric_difference(digit_1_set)
-    segment_3_mappings = digit_1_set.copy()
-    segment_4_mappings = segment_4_mappings.symmetric_difference(digit_1_set)
-    segment_5_mappings = segment_5_mappings.symmetric_difference(digit_1_set)
-    segment_6_mappings = digit_1_set.copy()
-    segment_7_mappings = segment_7_mappings.symmetric_difference(digit_1_set)
+    return two_three_five, zero_six_nine
 
-    # Digit 7
-    character_set = set(digit_7_mapping).symmetric_difference(segment_3_mappings)
-    segment_1_mappings = character_set.copy()
+
+def update_mappings_for_digit1(
+    segment_mappings: list[set[str]],
+    digit_mappings: list[str],
+) -> None:
+    digit_1_set = set(digit_mappings[1])
+    segment_mappings[0] = segment_mappings[0].symmetric_difference(digit_1_set)
+    segment_mappings[1] = segment_mappings[1].symmetric_difference(digit_1_set)
+    segment_mappings[2] = digit_1_set.copy()
+    segment_mappings[3] = segment_mappings[3].symmetric_difference(digit_1_set)
+    segment_mappings[4] = segment_mappings[4].symmetric_difference(digit_1_set)
+    segment_mappings[5] = digit_1_set.copy()
+    segment_mappings[6] = segment_mappings[6].symmetric_difference(digit_1_set)
+
+
+def update_mappings_for_digit7(
+    segment_mappings: list[set[str]],
+    digit_mappings: list[str],
+) -> None:
+    character_set = set(digit_mappings[7]).symmetric_difference(segment_mappings[2])
+    segment_mappings[0] = character_set.copy()
     character = character_set.pop()
-    segment_2_mappings.discard(character)
-    segment_4_mappings.discard(character)
-    segment_5_mappings.discard(character)
-    segment_7_mappings.discard(character)
+    segment_mappings[1].discard(character)
+    segment_mappings[3].discard(character)
+    segment_mappings[4].discard(character)
+    segment_mappings[6].discard(character)
 
-    # Digit 4
-    character_set = set(digit_4_mapping).symmetric_difference(segment_3_mappings)
-    segment_2_mappings = character_set.copy()
-    segment_4_mappings = character_set.copy()
-    segment_5_mappings = segment_5_mappings.symmetric_difference(character_set)
-    segment_7_mappings = segment_7_mappings.symmetric_difference(character_set)
 
-    # Digit 9
+def update_mappings_for_digit4(
+    segment_mappings: list[set[str]],
+    digit_mappings: list[str],
+) -> None:
+    character_set = set(digit_mappings[4]).symmetric_difference(segment_mappings[2])
+    segment_mappings[1] = character_set.copy()
+    segment_mappings[3] = character_set.copy()
+    segment_mappings[4] = segment_mappings[4].symmetric_difference(character_set)
+    segment_mappings[6] = segment_mappings[6].symmetric_difference(character_set)
+
+
+def update_mappings_for_digit9(
+    segment_mappings: list[set[str]],
+    digit_mappings: list[str],
+    zero_six_nine: list[str],
+) -> None:
     for signal_pattern_value in zero_six_nine:
-        search_set = segment_1_mappings.union(segment_2_mappings).union(
-            segment_3_mappings
+        search_set = (
+            segment_mappings[0].union(segment_mappings[1]).union(segment_mappings[2])
         )
         character_set = set(signal_pattern_value).symmetric_difference(search_set)
 
         if len(character_set) != 1:
             continue
 
-        segment_7_mappings = character_set.copy()
-        segment_5_mappings.discard(character_set.pop())
-        digit_9_mapping = signal_pattern_value
-        zero_six_nine.remove(digit_9_mapping)
+        segment_mappings[6] = character_set.copy()
+        segment_mappings[4].discard(character_set.pop())
+        digit_mappings[9] = signal_pattern_value
+        zero_six_nine.remove(digit_mappings[9])
         break
 
-    # Digit 0
+
+def update_mappings_for_digit0(
+    segment_mappings: list[set[str]],
+    digit_mappings: list[str],
+    zero_six_nine: list[str],
+) -> None:
     for signal_pattern_value in zero_six_nine:
-        search_set = segment_3_mappings.union(segment_5_mappings)
+        search_set = segment_mappings[2].union(segment_mappings[4])
         character_set = set(signal_pattern_value).symmetric_difference(search_set)
 
         if len(character_set) != 3:
             continue
 
-        segment_2_mappings = segment_2_mappings.intersection(character_set)
-        segment_4_mappings = segment_4_mappings.symmetric_difference(segment_2_mappings)
-        digit_0_mapping = signal_pattern_value
-        zero_six_nine.remove(digit_0_mapping)
+        segment_mappings[1] = segment_mappings[1].intersection(character_set)
+        segment_mappings[3] = segment_mappings[3].symmetric_difference(
+            segment_mappings[1]
+        )
+        digit_mappings[0] = signal_pattern_value
+        zero_six_nine.remove(digit_mappings[0])
         break
 
-    # Digit 6
-    digit_6_mapping = zero_six_nine.pop(0)
-    segment_6_mappings = segment_6_mappings.intersection(set(digit_6_mapping))
-    segment_3_mappings = segment_3_mappings.symmetric_difference(segment_6_mappings)
 
+def update_mappings_for_digit6(
+    segment_mappings: list[set[str]],
+    digit_mappings: list[str],
+    zero_six_nine: list[str],
+) -> None:
+    digit_mappings[6] = zero_six_nine.pop(0)
+    segment_mappings[5] = segment_mappings[5].intersection(set(digit_mappings[6]))
+    segment_mappings[2] = segment_mappings[2].symmetric_difference(segment_mappings[5])
+
+
+def update_mappings_for_digits_2_3_5(
+    segment_mappings: list[set[str]],
+    digit_mappings: list[str],
+    two_three_five: list[str],
+) -> None:
     for signal_pattern_value in two_three_five:
         # Digit 3
         if (
-            len(set(signal_pattern_value).symmetric_difference(set(digit_1_mapping)))
+            len(set(signal_pattern_value).symmetric_difference(set(digit_mappings[1])))
             == 3
         ):
-            digit_3_mapping = signal_pattern_value
+            digit_mappings[3] = signal_pattern_value
             continue
 
         # Digit 5
-        if list(segment_2_mappings)[0] in signal_pattern_value:
-            digit_5_mapping = signal_pattern_value
+        if list(segment_mappings[1])[0] in signal_pattern_value:
+            digit_mappings[5] = signal_pattern_value
             continue
 
         # Digit 2
-        if list(segment_5_mappings)[0] in signal_pattern_value:
-            digit_2_mapping = signal_pattern_value
+        if list(segment_mappings[4])[0] in signal_pattern_value:
+            digit_mappings[2] = signal_pattern_value
             continue
 
-    return [
-        "".join(sorted(digit_0_mapping)),
-        "".join(sorted(digit_1_mapping)),
-        "".join(sorted(digit_2_mapping)),
-        "".join(sorted(digit_3_mapping)),
-        "".join(sorted(digit_4_mapping)),
-        "".join(sorted(digit_5_mapping)),
-        "".join(sorted(digit_6_mapping)),
-        "".join(sorted(digit_7_mapping)),
-        "".join(sorted(digit_8_mapping)),
-        "".join(sorted(digit_9_mapping)),
-    ]
+
+def get_digits(signal_pattern_entry: list[str]) -> list[str]:
+    segment_mappings = get_segment_mappings(7)
+    digit_mappings = get_digit_mappings(10)
+
+    two_three_five, zero_six_nine = update_digit_mappings(
+        signal_pattern_entry,
+        digit_mappings,
+    )
+
+    update_mappings_for_digit1(segment_mappings, digit_mappings)
+    update_mappings_for_digit7(segment_mappings, digit_mappings)
+    update_mappings_for_digit4(segment_mappings, digit_mappings)
+    update_mappings_for_digit9(segment_mappings, digit_mappings, zero_six_nine)
+    update_mappings_for_digit0(segment_mappings, digit_mappings, zero_six_nine)
+    update_mappings_for_digit6(segment_mappings, digit_mappings, zero_six_nine)
+    update_mappings_for_digits_2_3_5(segment_mappings, digit_mappings, two_three_five)
+
+    return ["".join(sorted(digit_mapping)) for digit_mapping in digit_mappings]
 
 
-if __name__ == "__main__":
-    signal_patterns, output_values = read_input("input.txt")
-
-    # Part One
+def part_one(output_values: list[list[str]]) -> int:
     count1478: int = 0
 
     for output_value in output_values:
@@ -174,9 +210,13 @@ if __name__ == "__main__":
             if len(value) in {2, 3, 4, 7}:
                 count1478 += 1
 
-    print(f"The digits 1, 4, 7, or 8 appear {count1478} times.")
+    return count1478
 
-    # Part Two
+
+def part_two(
+    signal_patterns: list[list[str]],
+    output_values: list[list[str]],
+) -> int:
     total = 0
 
     for index, signal_pattern in enumerate(signal_patterns):
@@ -191,4 +231,12 @@ if __name__ == "__main__":
 
         total += int(digit_string)
 
-    print(f"The total value is {total}.")
+    return total
+
+
+if __name__ == "__main__":
+    signal_patterns_input, output_values_input = read_input("input.txt")
+    part_one_total = part_one(output_values_input)
+    print(f"The digits 1, 4, 7, or 8 appear {part_one_total} times.")
+    part_two_total = part_two(signal_patterns_input, output_values_input)
+    print(f"The total value is {part_two_total}.")
