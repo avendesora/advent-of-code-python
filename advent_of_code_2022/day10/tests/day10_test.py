@@ -1,8 +1,7 @@
 import os
 from pathlib import Path
 
-import pytest
-
+from advent_of_code_2022.day10.main import Operation
 from advent_of_code_2022.day10.main import part_one
 from advent_of_code_2022.day10.main import part_two
 from advent_of_code_2022.day10.main import read_input
@@ -10,19 +9,179 @@ from advent_of_code_2022.day10.main import read_input
 CURRENT_DIRECTORY = Path(os.path.dirname(os.path.realpath(__file__)))
 
 
-@pytest.mark.xfail()
 def test_read_input() -> None:
     input_data = read_input(CURRENT_DIRECTORY / "sample_input.txt")
-    assert input_data is not None
+    assert input_data == [
+        Operation(command="noop", value=0),
+        Operation(command="addx", value=3),
+        Operation(command="addx", value=-5),
+    ]
 
 
-@pytest.mark.xfail()
+def test_read_input2() -> None:
+    input_data = read_input(CURRENT_DIRECTORY / "sample_input2.txt")
+    assert input_data == [
+        Operation(command="addx", value=15),
+        Operation(command="addx", value=-11),
+        Operation(command="addx", value=6),
+        Operation(command="addx", value=-3),
+        Operation(command="addx", value=5),
+        Operation(command="addx", value=-1),
+        Operation(command="addx", value=-8),
+        Operation(command="addx", value=13),
+        Operation(command="addx", value=4),
+        Operation(command="noop", value=0),
+        Operation(command="addx", value=-1),
+        Operation(command="addx", value=5),
+        Operation(command="addx", value=-1),
+        Operation(command="addx", value=5),
+        Operation(command="addx", value=-1),
+        Operation(command="addx", value=5),
+        Operation(command="addx", value=-1),
+        Operation(command="addx", value=5),
+        Operation(command="addx", value=-1),
+        Operation(command="addx", value=-35),
+        Operation(command="addx", value=1),
+        Operation(command="addx", value=24),
+        Operation(command="addx", value=-19),
+        Operation(command="addx", value=1),
+        Operation(command="addx", value=16),
+        Operation(command="addx", value=-11),
+        Operation(command="noop", value=0),
+        Operation(command="noop", value=0),
+        Operation(command="addx", value=21),
+        Operation(command="addx", value=-15),
+        Operation(command="noop", value=0),
+        Operation(command="noop", value=0),
+        Operation(command="addx", value=-3),
+        Operation(command="addx", value=9),
+        Operation(command="addx", value=1),
+        Operation(command="addx", value=-3),
+        Operation(command="addx", value=8),
+        Operation(command="addx", value=1),
+        Operation(command="addx", value=5),
+        Operation(command="noop", value=0),
+        Operation(command="noop", value=0),
+        Operation(command="noop", value=0),
+        Operation(command="noop", value=0),
+        Operation(command="noop", value=0),
+        Operation(command="addx", value=-36),
+        Operation(command="noop", value=0),
+        Operation(command="addx", value=1),
+        Operation(command="addx", value=7),
+        Operation(command="noop", value=0),
+        Operation(command="noop", value=0),
+        Operation(command="noop", value=0),
+        Operation(command="addx", value=2),
+        Operation(command="addx", value=6),
+        Operation(command="noop", value=0),
+        Operation(command="noop", value=0),
+        Operation(command="noop", value=0),
+        Operation(command="noop", value=0),
+        Operation(command="noop", value=0),
+        Operation(command="addx", value=1),
+        Operation(command="noop", value=0),
+        Operation(command="noop", value=0),
+        Operation(command="addx", value=7),
+        Operation(command="addx", value=1),
+        Operation(command="noop", value=0),
+        Operation(command="addx", value=-13),
+        Operation(command="addx", value=13),
+        Operation(command="addx", value=7),
+        Operation(command="noop", value=0),
+        Operation(command="addx", value=1),
+        Operation(command="addx", value=-33),
+        Operation(command="noop", value=0),
+        Operation(command="noop", value=0),
+        Operation(command="noop", value=0),
+        Operation(command="addx", value=2),
+        Operation(command="noop", value=0),
+        Operation(command="noop", value=0),
+        Operation(command="noop", value=0),
+        Operation(command="addx", value=8),
+        Operation(command="noop", value=0),
+        Operation(command="addx", value=-1),
+        Operation(command="addx", value=2),
+        Operation(command="addx", value=1),
+        Operation(command="noop", value=0),
+        Operation(command="addx", value=17),
+        Operation(command="addx", value=-9),
+        Operation(command="addx", value=1),
+        Operation(command="addx", value=1),
+        Operation(command="addx", value=-3),
+        Operation(command="addx", value=11),
+        Operation(command="noop", value=0),
+        Operation(command="noop", value=0),
+        Operation(command="addx", value=1),
+        Operation(command="noop", value=0),
+        Operation(command="addx", value=1),
+        Operation(command="noop", value=0),
+        Operation(command="noop", value=0),
+        Operation(command="addx", value=-13),
+        Operation(command="addx", value=-19),
+        Operation(command="addx", value=1),
+        Operation(command="addx", value=3),
+        Operation(command="addx", value=26),
+        Operation(command="addx", value=-30),
+        Operation(command="addx", value=12),
+        Operation(command="addx", value=-1),
+        Operation(command="addx", value=3),
+        Operation(command="addx", value=1),
+        Operation(command="noop", value=0),
+        Operation(command="noop", value=0),
+        Operation(command="noop", value=0),
+        Operation(command="addx", value=-9),
+        Operation(command="addx", value=18),
+        Operation(command="addx", value=1),
+        Operation(command="addx", value=2),
+        Operation(command="noop", value=0),
+        Operation(command="noop", value=0),
+        Operation(command="addx", value=9),
+        Operation(command="noop", value=0),
+        Operation(command="noop", value=0),
+        Operation(command="noop", value=0),
+        Operation(command="addx", value=-1),
+        Operation(command="addx", value=2),
+        Operation(command="addx", value=-37),
+        Operation(command="addx", value=1),
+        Operation(command="addx", value=3),
+        Operation(command="noop", value=0),
+        Operation(command="addx", value=15),
+        Operation(command="addx", value=-21),
+        Operation(command="addx", value=22),
+        Operation(command="addx", value=-6),
+        Operation(command="addx", value=1),
+        Operation(command="noop", value=0),
+        Operation(command="addx", value=2),
+        Operation(command="addx", value=1),
+        Operation(command="noop", value=0),
+        Operation(command="addx", value=-10),
+        Operation(command="noop", value=0),
+        Operation(command="noop", value=0),
+        Operation(command="addx", value=20),
+        Operation(command="addx", value=1),
+        Operation(command="addx", value=2),
+        Operation(command="addx", value=2),
+        Operation(command="addx", value=-6),
+        Operation(command="addx", value=-11),
+        Operation(command="noop", value=0),
+        Operation(command="noop", value=0),
+        Operation(command="noop", value=0),
+    ]
+
+
 def test_part_one() -> None:
-    input_data = read_input(CURRENT_DIRECTORY / "sample_input.txt")
-    assert part_one(input_data) is not None
+    input_data = read_input(CURRENT_DIRECTORY / "sample_input2.txt")
+    assert part_one(input_data) == 13140
 
 
-@pytest.mark.xfail()
 def test_part_two() -> None:
-    input_data = read_input(CURRENT_DIRECTORY / "sample_input.txt")
-    assert part_two(input_data) is not None
+    input_data = read_input(CURRENT_DIRECTORY / "sample_input2.txt")
+    assert part_two(input_data) == [
+        "##..##..##..##..##..##..##..##..##..##..",
+        "###...###...###...###...###...###...###.",
+        "####....####....####....####....####....",
+        "#####.....#####.....#####.....#####.....",
+        "######......######......######......####",
+        "#######.......#######.......#######.....",
+    ]
