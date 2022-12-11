@@ -9,4 +9,4 @@ My Python solutions/attempts for the [Advent of Code](https://adventofcode.com) 
 
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
 
-[![Python 3.11](https://img.shields.io/badge/python-3.10%20%7C%203.11-blue?logo=python&logoColor=lightgray)](https://www.python.org/downloads/)
+[![Python 3.11](https://img.shields.io/badge/python-3.9%20%7C%203.10%20%7C%203.11-blue?logo=python&logoColor=lightgray)](https://www.python.org/downloads/)
