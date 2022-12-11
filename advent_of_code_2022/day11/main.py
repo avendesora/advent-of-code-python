@@ -1,4 +1,5 @@
 from dataclasses import dataclass
+from functools import lru_cache
 from pathlib import Path
 
 from helpers import clean_line
@@ -72,6 +73,14 @@ def read_input(filename: Path | str) -> dict[int, Monkey]:
     return monkeys
 
 
+SUPER_MODULO = 2 * 3 * 5 * 7 * 11 * 13 * 17 * 19
+
+
+@lru_cache
+def test_item(operand1: int, operand2: int) -> bool:
+    return operand1 % operand2 == 0
+
+
 def part_one(input_data: dict[int, Monkey]) -> int | None:
     monkeys = input_data.copy()
     max_monkey_number = max(monkeys.keys())
@@ -98,9 +107,10 @@ def part_one(input_data: dict[int, Monkey]) -> int | None:
                     worry_level += operand
 
                 # worry_level = worry_level // 3
+                worry_level = worry_level % SUPER_MODULO
 
-                test_value = monkey.test.test.split()[-1]
-                test_result = worry_level % int(test_value) == 0
+                test_value = int(monkey.test.test.split()[-1])
+                test_result = test_item(worry_level, test_value)
 
                 next_monkey_id = int(monkey.test.if_true.split()[-1]) if test_result else int(monkey.test.if_false.split()[-1])
                 next_monkey = monkeys.get(next_monkey_id)
