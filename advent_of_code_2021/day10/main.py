@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 from helpers import read_input_as_string_array
 
 OPEN_AND_CLOSE_CHARACTERS: dict[str, str] = {

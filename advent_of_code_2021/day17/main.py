@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 from pathlib import Path
 
 from helpers import read_input_as_string_array

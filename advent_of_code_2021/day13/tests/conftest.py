@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 import pytest
 
 from advent_of_code_2021.day13.main import Axis

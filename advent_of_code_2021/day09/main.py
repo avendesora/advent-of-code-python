@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 from functools import reduce
 
 from helpers import read_input_as_2d_int_array
