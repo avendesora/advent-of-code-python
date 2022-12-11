@@ -11,4 +11,4 @@
 
 My Python solutions/attempts for the [Advent of Code](https://adventofcode.com) puzzles.
 
-All daily input included is sample input and not my actual input. To run it with your input, copy it into the input.txt for the appropriate day before running the related main.py. 
+All daily input included is sample input and not my actual input. To run it with your input, copy it into the input.txt for the appropriate day before running the related main.py.
