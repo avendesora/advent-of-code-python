@@ -5,9 +5,9 @@ from pathlib import Path
 
 from advent_of_code_2021.day15.main import get_edges
 from advent_of_code_2021.day15.main import get_full_risk_levels
-from advent_of_code_2021.day15.main import get_risk_graph
 from advent_of_code_2021.day15.main import increase_risk
 from helpers import read_input_as_2d_int_array
+from helpers.simple_djikstra import get_weighted_graph
 
 CURRENT_DIRECTORY = Path(os.path.dirname(os.path.realpath(__file__)))
 
@@ -28,8 +28,8 @@ def test_get_edges(
 
 
 def test_get_total_least_risk(edges: list[tuple[int, int, int]]) -> None:
-    graph = get_risk_graph(edges, 100)
-    lowest_total_risk = graph.get_total_least_risk()
+    graph = get_weighted_graph(edges, 100)
+    lowest_total_risk = graph.get_total_least_weight()
 
     assert lowest_total_risk == 40
 
@@ -63,7 +63,7 @@ def test_get_total_least_risk_full_risk_levels() -> None:
     risk_levels = read_input_as_2d_int_array(CURRENT_DIRECTORY / "sample_input.txt")
     full_risk_levels = get_full_risk_levels(risk_levels)
     edges = get_edges(full_risk_levels)
-    graph = get_risk_graph(edges, 100 * 25)
-    lowest_total_risk = graph.get_total_least_risk()
+    graph = get_weighted_graph(edges, 100 * 25)
+    lowest_total_risk = graph.get_total_least_weight()
 
     assert lowest_total_risk == 315
