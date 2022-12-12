@@ -21,6 +21,10 @@ repos:
     rev: 5.10.1
     hooks:
       - id: isort
+  - repo: https://github.com/PyCQA/autoflake
+    rev: v2.0.0
+    hooks:
+      - id: autoflake
   - repo: https://github.com/pre-commit/mirrors-mypy
     rev: v0.991
     hooks:
