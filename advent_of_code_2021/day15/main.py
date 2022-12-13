@@ -4,8 +4,8 @@ import itertools
 from contextlib import suppress
 
 from helpers import read_input_as_2d_int_array
-from helpers.simple_djikstra import WeightedGraph
-from helpers.simple_djikstra import get_weighted_graph
+from helpers.simple_dijkstra import WeightedGraph
+from helpers.simple_dijkstra import get_weighted_graph
 
 
 def get_edges(risk_levels: list[list[int]]) -> list[tuple[int, int, int]]:

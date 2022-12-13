@@ -5,8 +5,8 @@ from contextlib import suppress
 from pathlib import Path
 
 from helpers import read_input_as_string_array
-from helpers.simple_djikstra import WeightedGraph
-from helpers.simple_djikstra import get_weighted_graph
+from helpers.simple_dijkstra import WeightedGraph
+from helpers.simple_dijkstra import get_weighted_graph
 
 
 def read_input(filename: Path | str) -> list[list[str]]:

@@ -7,7 +7,7 @@ from advent_of_code_2021.day15.main import get_edges
 from advent_of_code_2021.day15.main import get_full_risk_levels
 from advent_of_code_2021.day15.main import increase_risk
 from helpers import read_input_as_2d_int_array
-from helpers.simple_djikstra import get_weighted_graph
+from helpers.simple_dijkstra import get_weighted_graph
 
 CURRENT_DIRECTORY = Path(os.path.dirname(os.path.realpath(__file__)))
 
