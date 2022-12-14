@@ -9,8 +9,8 @@ from helpers import read_input_as_string_array
 
 def read_input(filename: Path | str) -> tuple[list[list[Point2D]], int, int, int]:
     paths: list[list[Point2D]] = []
-    x_values: set(int) = set()
-    y_values: set(int) = set()
+    x_values: set[int] = set()
+    y_values: set[int] = set()
 
     for line in read_input_as_string_array(filename):
         path: list[Point2D] = []
