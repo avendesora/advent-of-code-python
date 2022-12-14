@@ -50,10 +50,7 @@ def apply_rules(polymer: str, rules: dict[str, str]) -> str:
 
 
 def get_distinct_characters(polymer: str, rules: dict[str, str]) -> set[str]:
-    distinct_characters: set[str] = set()
-
-    for character in polymer:
-        distinct_characters.add(character)
+    distinct_characters: set[str] = set(polymer)
 
     for key, value in rules.items():
         for character in key:
@@ -66,12 +63,7 @@ def get_distinct_characters(polymer: str, rules: dict[str, str]) -> set[str]:
 
 
 def count_characters(polymer: str, distinct_characters: set[str]) -> dict[str, int]:
-    character_count: dict[str, int] = {}
-
-    for character in distinct_characters:
-        character_count[character] = polymer.count(character)
-
-    return character_count
+    return {character: polymer.count(character) for character in distinct_characters}
 
 
 def evaluate_counts(

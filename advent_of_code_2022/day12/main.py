@@ -14,26 +14,22 @@ def read_input(filename: Path | str) -> list[list[str]]:
 
 
 def get_start_and_end(grid: list[list[str]]) -> tuple[int, int]:
-    start_row = -1
-    start_column = -1
-    end_row = -1
-    end_column = -1
+    row_length = len(grid[0])
+    start_index = -1
+    end_index = -1
 
     for row_index, row in enumerate(grid):
         for column_index, cell in enumerate(row):
+            if start_index > -1 and end_index > -1:
+                break
+
             if cell == "S":
-                start_row = row_index
-                start_column = column_index
+                start_index = row_index * row_length + column_index
                 continue
 
             if cell == "E":
-                end_row = row_index
-                end_column = column_index
+                end_index = row_index * row_length + column_index
                 continue
-
-    row_length = len(grid[0])
-    start_index = start_row * row_length + start_column
-    end_index = end_row * row_length + end_column
 
     return start_index, end_index
 
@@ -81,7 +77,8 @@ def get_edges(input_data: list[list[str]]) -> list[tuple[int, int, int]]:
 
 def get_graph(input_data: list[list[str]]) -> WeightedGraph:
     return get_weighted_graph(
-        get_edges(input_data), len(input_data[0]) * len(input_data)
+        get_edges(input_data),
+        len(input_data[0]) * len(input_data),
     )
 
 

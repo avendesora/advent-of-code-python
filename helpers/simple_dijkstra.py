@@ -73,7 +73,9 @@ class WeightedGraph:
         return paths
 
     def get_total_least_weight(
-        self: WeightedGraph, start: int = 0, end: int | None = None
+        self: WeightedGraph,
+        start: int = 0,
+        end: int | None = None,
     ) -> int:
         shortest_path = self._find_shortest_path(start)
         edge: dict[str, int] = shortest_path[end or (self.vertex_count - 1)]
@@ -87,7 +89,8 @@ class WeightedGraph:
 
 
 def get_weighted_graph(
-    edges: list[tuple[int, int, int]], vertex_count: int
+    edges: list[tuple[int, int, int]],
+    vertex_count: int,
 ) -> WeightedGraph:
     graph = WeightedGraph(vertex_count)
 
