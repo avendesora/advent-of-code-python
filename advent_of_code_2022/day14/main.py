@@ -1,52 +1,47 @@
 from __future__ import annotations
 
-from contextlib import suppress
+import itertools
 from pathlib import Path
 
 from helpers import Point2D
 from helpers import read_input_as_string_array
 
 
-def read_input(filename: Path | str) -> list[list[Point2D]]:
+def read_input(filename: Path | str) -> tuple[list[list[Point2D]], int, int, int]:
     paths: list[list[Point2D]] = []
+    min_x: int = -1
+    max_x: int = -1
+    max_y: int = -1
 
     for line in read_input_as_string_array(filename):
         path: list[Point2D] = []
 
         for point in line.split(" -> "):
             point_x, point_y = point.split(",")
-            path.append(Point2D(int(point_x), int(point_y)))
+            x = int(point_x)
+            y = int(point_y)
+            path.append(Point2D(x, y))
+
+            if x < min_x or min_x == -1:
+                min_x = x
+
+            if x > max_x or max_x == -1:
+                max_x = x
+
+            if y > max_y or max_y == -1:
+                max_y = y
 
         paths.append(path)
 
-    return paths
+    return paths, min_x, max_x, max_y
 
 
-def draw_grid(input_data: list[list[Point2D]]) -> tuple[list[list[str]], int]:
-    min_x = -1
-    max_x = -1
-    max_y = -1
-
-    for row in input_data:
-        for cell in row:
-            if cell.x < min_x or min_x == -1:
-                min_x = cell.x
-
-            if cell.x > max_x or max_x == -1:
-                max_x = cell.x
-
-            if cell.y > max_y or max_y == -1:
-                max_y = cell.y
-
-    grid: list[list[str]] = []
-
-    for _ in range(max_y + 1):
-        grid_row: list[str] = []
-
-        for _ in range(min_x, max_x + 1):
-            grid_row.append(".")
-
-        grid.append(grid_row)
+def draw_grid(
+    input_data: list[list[Point2D]], min_x: int, max_x: int, max_y: int
+) -> list[list[str]]:
+    grid: list[list[str]] = [
+        ["." for _ in range(min_x, max_x + 1)] for _ in range(max_y + 1)
+    ]
 
     for path in input_data:
         for index, point in enumerate(path):
@@ -64,22 +59,21 @@ def draw_grid(input_data: list[list[Point2D]]) -> tuple[list[list[str]], int]:
                 else:
                     for y in range(next_point.y, point.y + 1):
                         grid[y][x] = "#"
+            elif point.x < next_point.x:
+                for x in range(point.x - min_x, next_point.x - min_x + 1):
+                    grid[point.y][x] = "#"
             else:
-                if point.x < next_point.x:
-                    for x in range(point.x - min_x, next_point.x - min_x + 1):
-                        grid[point.y][x] = "#"
-                else:
-                    for x in range(next_point.x - min_x, point.x - min_x + 1):
-                        grid[point.y][x] = "#"
+                for x in range(next_point.x - min_x, point.x - min_x + 1):
+                    grid[point.y][x] = "#"
 
-    return grid, min_x
+    return grid
 
 
 def pour_sand(grid: list[list[str]], x_offset: int) -> int:
     sand_count = 0
     current_sand = None
 
-    with suppress(IndexError):
+    try:
         while True:
             if current_sand is None:
                 current_sand = Point2D(500, 0)
@@ -112,34 +106,39 @@ def pour_sand(grid: list[list[str]], x_offset: int) -> int:
                 break
 
             current_sand = None
+    except IndexError:
+        sand_count -= 1
 
     return sand_count
 
 
-def part_one(input_data: list[list[Point2D]]) -> int:
-    grid, x_offset = draw_grid(input_data)
-    sand_count = pour_sand(grid, x_offset)
-    return sand_count - 1
+def part_one(grid: list[list[str]], x_offset: int) -> int:
+    return pour_sand(grid, x_offset)
 
 
-def part_two(input_data: list[list[Point2D]]) -> int:
-    grid, x_offset = draw_grid(input_data)
+def part_two(grid: list[list[str]], x_offset: int) -> int:
     row_length = len(grid[0])
     padding = len(grid)
     x_offset -= padding
 
-    for row in grid:
-        for _ in range(padding):
-            row.insert(0, ".")
-            row.append(".")
+    for row, _ in itertools.product(grid, range(padding)):
+        row.insert(0, ".")
+        row.append(".")
 
-    grid.append(["." for _ in range(padding + row_length + padding)])
-    grid.append(["#" for _ in range(padding + row_length + padding)])
+    grid.extend(
+        (
+            ["." for _ in range(padding + row_length + padding)],
+            ["#" for _ in range(padding + row_length + padding)],
+        )
+    )
 
     return pour_sand(grid, x_offset)
 
 
 if __name__ == "__main__":
-    day14_input = read_input("input.txt")
-    print(part_one(day14_input))
-    print(part_two(day14_input))
+    day14_input, x_min, x_max, y_max = read_input("input.txt")
+    grid_input: list[list[str]] = draw_grid(day14_input, x_min, x_max, y_max)
+    print(part_one(grid_input, x_min))
+
+    grid_input = draw_grid(day14_input, x_min, x_max, y_max)
+    print(part_two(grid_input, x_min))
