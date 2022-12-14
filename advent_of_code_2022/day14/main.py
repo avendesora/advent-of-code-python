@@ -9,35 +9,28 @@ from helpers import read_input_as_string_array
 
 def read_input(filename: Path | str) -> tuple[list[list[Point2D]], int, int, int]:
     paths: list[list[Point2D]] = []
-    min_x: int = -1
-    max_x: int = -1
-    max_y: int = -1
+    x_values: set(int) = set()
+    y_values: set(int) = set()
 
     for line in read_input_as_string_array(filename):
         path: list[Point2D] = []
 
         for point in line.split(" -> "):
-            point_x, point_y = point.split(",")
-            x = int(point_x)
-            y = int(point_y)
+            x, y = (int(value) for value in point.split(","))
             path.append(Point2D(x, y))
-
-            if x < min_x or min_x == -1:
-                min_x = x
-
-            if x > max_x or max_x == -1:
-                max_x = x
-
-            if y > max_y or max_y == -1:
-                max_y = y
+            x_values.add(x)
+            y_values.add(y)
 
         paths.append(path)
 
-    return paths, min_x, max_x, max_y
+    return paths, min(x_values), max(x_values), max(y_values)
 
 
 def draw_grid(
-    input_data: list[list[Point2D]], min_x: int, max_x: int, max_y: int
+    input_data: list[list[Point2D]],
+    min_x: int,
+    max_x: int,
+    max_y: int,
 ) -> list[list[str]]:
     grid: list[list[str]] = [
         ["." for _ in range(min_x, max_x + 1)] for _ in range(max_y + 1)
