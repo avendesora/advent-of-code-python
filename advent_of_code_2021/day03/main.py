@@ -92,6 +92,7 @@ if __name__ == "__main__":
     oxygen_generator_rating = get_oxygen_generator_rating(binary_data)
     co2_scrubber_rating = get_co2_scrubber_rating(binary_data)
     life_support_rating = get_life_support_rating(
-        oxygen_generator_rating, co2_scrubber_rating
+        oxygen_generator_rating,
+        co2_scrubber_rating,
     )
     print(f"The life support rating of the submarine is {life_support_rating}.")

@@ -30,7 +30,7 @@ def test_day_11_read_input() -> None:
 
 def test_day_11_part_one() -> None:
     step1 = take_step(
-        read_input_as_2d_int_array(CURRENT_DIRECTORY / "sample_input.txt")
+        read_input_as_2d_int_array(CURRENT_DIRECTORY / "sample_input.txt"),
     )
     assert step1 == [
         [6, 5, 9, 4, 2, 5, 4, 3, 3, 4],
@@ -84,13 +84,15 @@ def test_day_11_part_one() -> None:
 
     assert (
         take_steps(
-            read_input_as_2d_int_array(CURRENT_DIRECTORY / "sample_input.txt"), 10
+            read_input_as_2d_int_array(CURRENT_DIRECTORY / "sample_input.txt"),
+            10,
         )
         == 204
     )
     assert (
         take_steps(
-            read_input_as_2d_int_array(CURRENT_DIRECTORY / "sample_input.txt"), 100
+            read_input_as_2d_int_array(CURRENT_DIRECTORY / "sample_input.txt"),
+            100,
         )
         == 1656
     )

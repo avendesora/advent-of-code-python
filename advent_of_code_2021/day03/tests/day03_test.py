@@ -36,6 +36,7 @@ def test_part_two() -> None:
     oxygen_generator_rating = get_oxygen_generator_rating(input_data)
     co2_scrubber_rating = get_co2_scrubber_rating(input_data)
     life_support_rating = get_life_support_rating(
-        oxygen_generator_rating, co2_scrubber_rating
+        oxygen_generator_rating,
+        co2_scrubber_rating,
     )
     assert life_support_rating == 230

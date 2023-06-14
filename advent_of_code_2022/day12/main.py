@@ -55,12 +55,14 @@ def get_edges(input_data: list[list[str]]) -> list[tuple[int, int, int]]:
             current_cell: int = row_index * row_length + column_index
 
             if column_index > 0 and can_move(
-                cell, input_data[row_index][column_index - 1]
+                cell,
+                input_data[row_index][column_index - 1],
             ):
                 edges.append((current_cell, current_cell - 1, 1))
 
             if row_index > 0 and can_move(
-                cell, input_data[row_index - 1][column_index]
+                cell,
+                input_data[row_index - 1][column_index],
             ):
                 edges.append((current_cell, current_cell - row_length, 1))
 
@@ -101,7 +103,7 @@ def part_two(graph: WeightedGraph, end_index: int, input_data: list[list[str]]) 
     for start_index in all_starts:
         with suppress(KeyError):  # maybe not all "a" cells have a path to "E"
             all_path_lengths.append(
-                graph.get_total_least_weight(start_index, end_index)
+                graph.get_total_least_weight(start_index, end_index),
             )
 
     return min(all_path_lengths)

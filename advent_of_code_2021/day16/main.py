@@ -51,7 +51,7 @@ def parse_packets(
                         packet_type_id,
                         literal_value,
                         sub_packets,
-                    )
+                    ),
                 )
         except (IndexError, ValueError):
             break

@@ -122,7 +122,7 @@ def part_two(grid: list[list[str]], x_offset: int) -> int:
         (
             ["." for _ in range(padding + row_length + padding)],
             ["#" for _ in range(padding + row_length + padding)],
-        )
+        ),
     )
 
     return pour_sand(grid, x_offset)

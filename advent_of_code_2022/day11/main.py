@@ -68,25 +68,25 @@ def read_input(filename: Path | str) -> dict[int, Monkey]:
 
             if cleaned_line.startswith("Operation: "):
                 current_monkey.operation, current_monkey.operand = read_operation_line(
-                    cleaned_line
+                    cleaned_line,
                 )
                 continue
 
             if cleaned_line.startswith("Test"):
                 current_monkey.test_divisor = int(
-                    cleaned_line.replace("Test: ", "").split()[-1]
+                    cleaned_line.replace("Test: ", "").split()[-1],
                 )
                 continue
 
             if cleaned_line.startswith("If true"):
                 current_monkey.if_true = int(
-                    cleaned_line.replace("If true: ", "").split()[-1]
+                    cleaned_line.replace("If true: ", "").split()[-1],
                 )
                 continue
 
             if cleaned_line.startswith("If false"):
                 current_monkey.if_false = int(
-                    cleaned_line.replace("If false: ", "").split()[-1]
+                    cleaned_line.replace("If false: ", "").split()[-1],
                 )
                 continue
 

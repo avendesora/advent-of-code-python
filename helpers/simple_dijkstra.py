@@ -40,7 +40,8 @@ class WeightedGraph:
         return self._edges[index]
 
     def _find_shortest_path(
-        self: WeightedGraph, start: int
+        self: WeightedGraph,
+        start: int,
     ) -> dict[int, dict[str, int]]:
         weights: list[int | None] = [None] * self.vertex_count
         weights[start] = 0
@@ -66,7 +67,8 @@ class WeightedGraph:
                     heappush(
                         priority_queue,
                         Node(
-                            weighted_edge["end"], weighted_edge["weight"] + weight_start
+                            weighted_edge["end"],
+                            weighted_edge["weight"] + weight_start,
                         ),
                     )
 

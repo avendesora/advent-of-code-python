@@ -73,7 +73,10 @@ def get_basin(
         if cell_id not in current_basin:
             current_basin.add(cell_id)
             current_basin = get_basin(
-                point_array, row_index - 1, column_index, current_basin
+                point_array,
+                row_index - 1,
+                column_index,
+                current_basin,
             )
 
     # Check below
@@ -86,7 +89,10 @@ def get_basin(
         if cell_id not in current_basin:
             current_basin.add(cell_id)
             current_basin = get_basin(
-                point_array, row_index + 1, column_index, current_basin
+                point_array,
+                row_index + 1,
+                column_index,
+                current_basin,
             )
 
     # Check left
@@ -96,7 +102,10 @@ def get_basin(
         if cell_id not in current_basin:
             current_basin.add(cell_id)
             current_basin = get_basin(
-                point_array, row_index, column_index - 1, current_basin
+                point_array,
+                row_index,
+                column_index - 1,
+                current_basin,
             )
 
     # Check right
@@ -109,7 +118,10 @@ def get_basin(
         if cell_id not in current_basin:
             current_basin.add(cell_id)
             current_basin = get_basin(
-                point_array, row_index, column_index + 1, current_basin
+                point_array,
+                row_index,
+                column_index + 1,
+                current_basin,
             )
 
     return current_basin

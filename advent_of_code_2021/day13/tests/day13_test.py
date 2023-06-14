@@ -15,7 +15,7 @@ CURRENT_DIRECTORY = Path(os.path.dirname(os.path.realpath(__file__)))
 
 
 def test_day_13_read_input(
-    sample_data: tuple[list[Point2D], list[tuple[Axis, int]]]
+    sample_data: tuple[list[Point2D], list[tuple[Axis, int]]],
 ) -> None:
     input_data = read_input(CURRENT_DIRECTORY / "sample_input.txt")
     assert input_data == sample_data

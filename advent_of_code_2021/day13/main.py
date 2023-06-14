@@ -82,7 +82,8 @@ def fold_y(pattern_to_fold: list[list[bool]], value: int) -> list[list[bool]]:
 
 
 def execute_instruction(
-    pattern_to_fold: list[list[bool]], current_instruction: tuple[Axis, int]
+    pattern_to_fold: list[list[bool]],
+    current_instruction: tuple[Axis, int],
 ) -> list[list[bool]]:
     axis, value = current_instruction
 
@@ -93,7 +94,8 @@ def execute_instruction(
 
 
 def printable_pattern(
-    pattern_to_print: list[list[bool]], false_character: str = "."
+    pattern_to_print: list[list[bool]],
+    false_character: str = ".",
 ) -> str:
     pattern_string: str = ""
 

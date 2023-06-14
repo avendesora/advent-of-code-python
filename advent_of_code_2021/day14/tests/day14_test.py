@@ -93,7 +93,7 @@ def test_update_pairs(
     pairs4 = update_pairs(pairs3, rules)
 
     assert pairs4 == get_pairs_from_polymer(
-        "NBBNBNBBCCNBCNCCNBBNBBNBBBNBBNBBCBHCBHHNHCBBCBHCB"
+        "NBBNBNBBCCNBCNCCNBBNBBNBBBNBBNBBCBHCBHHNHCBBCBHCB",
     )
 
 
