@@ -61,7 +61,7 @@ def part_two(input_data: list[Operation]) -> list[str]:
     pixels: str = ""
 
     for cycle in range(240):
-        pixels += "#" if cycle % 40 in [x, x - 1, x + 1] else "."
+        pixels += "#" if cycle % 40 in {x, x - 1, x + 1} else "."
         get_next, index, x = run_cycle(get_next, index, x, input_data)
 
     return [pixels[i : i + 40] for i in range(0, len(pixels), 40)]

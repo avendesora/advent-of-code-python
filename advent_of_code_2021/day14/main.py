@@ -67,19 +67,21 @@ def count_characters(polymer: str, distinct_characters: set[str]) -> dict[str, i
 
 
 def evaluate_counts(
-    polymer: str, distinct_characters: set[str]
+    polymer: str,
+    distinct_characters: set[str],
 ) -> tuple[str, int, str, int]:
     return _evaluate_counts_common(count_characters(polymer, distinct_characters))
 
 
 def evaluate_counts_part_two(
-    pairs: dict[str, int], polymer: str
+    pairs: dict[str, int],
+    polymer: str,
 ) -> tuple[str, int, str, int]:
     return _evaluate_counts_common(get_character_counts(pairs, polymer[-1]))
 
 
 def _evaluate_counts_common(
-    character_counts: dict[str, int]
+    character_counts: dict[str, int],
 ) -> tuple[str, int, str, int]:
     most_common_element: str = ""
     most_common_quantity: int = 0
@@ -162,14 +164,16 @@ if __name__ == "__main__":
     # Part One
     polymer_template, pair_insertion_rules = read_input("input.txt")
     characters: set[str] = get_distinct_characters(
-        polymer_template, pair_insertion_rules
+        polymer_template,
+        pair_insertion_rules,
     )
 
     for _ in range(10):
         polymer_template = apply_rules(polymer_template, pair_insertion_rules)
 
     largest_element, largest_count, smallest_element, smallest_count = evaluate_counts(
-        polymer_template, characters
+        polymer_template,
+        characters,
     )
 
     print(f"Most common element ({largest_element}, {largest_count}).")

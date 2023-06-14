@@ -15,7 +15,7 @@ def test_read_input(
     output_values: list[list[str]],
 ) -> None:
     signal_patterns_input, output_values_input = read_input(
-        CURRENT_DIRECTORY / "sample_input.txt"
+        CURRENT_DIRECTORY / "sample_input.txt",
     )
     assert signal_patterns_input == signal_patterns
     assert output_values_input == output_values

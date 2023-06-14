@@ -67,7 +67,8 @@ def move_next_knot(previous_knot: Point2D, current_knot: Point2D) -> Point2D:
 
 
 def get_tail_locations(
-    input_data: list[Motion], number_of_knots: int = 2
+    input_data: list[Motion],
+    number_of_knots: int = 2,
 ) -> set[Point2D]:
     starting_point = Point2D(0, 0)
     knots: list[Point2D] = [starting_point for _ in range(number_of_knots)]

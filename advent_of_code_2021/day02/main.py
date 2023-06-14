@@ -27,7 +27,7 @@ def read_input(filename: Path | str) -> list[Command]:
         for line in lines:
             direction_string, distance_string = clean_line(line).split(" ")
             input_commands.append(
-                Command(Direction(direction_string), int(distance_string))
+                Command(Direction(direction_string), int(distance_string)),
             )
 
     return input_commands

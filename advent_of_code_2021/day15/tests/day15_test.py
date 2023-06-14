@@ -51,7 +51,7 @@ def test_increase_risk(
 def test_get_full_risk_levels() -> None:
     risk_levels = read_input_as_2d_int_array(CURRENT_DIRECTORY / "sample_input.txt")
     expected_full_risk_levels = read_input_as_2d_int_array(
-        CURRENT_DIRECTORY / "full_sample_input.txt"
+        CURRENT_DIRECTORY / "full_sample_input.txt",
     )
 
     actual_full_risk_levels = get_full_risk_levels(risk_levels)

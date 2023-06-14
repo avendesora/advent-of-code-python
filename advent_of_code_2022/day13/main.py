@@ -84,7 +84,7 @@ def part_one(input_data: list[PacketPair]) -> int:
             index + 1
             for index, packet_pair in enumerate(input_data)
             if is_correct_order(packet_pair.left, packet_pair.right)
-        }
+        },
     )
 
 

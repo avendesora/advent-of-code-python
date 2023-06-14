@@ -49,11 +49,11 @@ def part_one(input_data: list[list[int]]) -> int:
 
     for row_index, row in enumerate(input_data):
         for column_index, cell in enumerate(row):
-            if row_index in [0, len(input_data) - 1]:
+            if row_index in {0, len(input_data) - 1}:
                 visible_count += 1
                 continue
 
-            if column_index in [0, len(row) - 1]:
+            if column_index in {0, len(row) - 1}:
                 visible_count += 1
                 continue
 

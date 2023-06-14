@@ -142,7 +142,7 @@ def update_mappings_for_digit0(
 
         segment_mappings[1] = segment_mappings[1].intersection(character_set)
         segment_mappings[3] = segment_mappings[3].symmetric_difference(
-            segment_mappings[1]
+            segment_mappings[1],
         )
         digit_mappings[0] = signal_pattern_value
         zero_six_nine.remove(digit_mappings[0])

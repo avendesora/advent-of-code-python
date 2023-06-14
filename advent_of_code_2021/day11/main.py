@@ -123,7 +123,8 @@ if __name__ == "__main__":
     # Part One
     number_of_steps: int = 100
     number_of_flashes: int = take_steps(
-        read_input_as_2d_int_array("input.txt"), number_of_steps
+        read_input_as_2d_int_array("input.txt"),
+        number_of_steps,
     )
     print(
         f"After {number_of_steps} steps, there have been a total of "

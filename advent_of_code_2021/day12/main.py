@@ -35,14 +35,17 @@ def make_graph(connections: list[tuple[str, ...]]) -> GraphNode:
 
 
 def find_valid_paths(
-    start: GraphNode, small_cave_visit_max: int = 1
+    start: GraphNode,
+    small_cave_visit_max: int = 1,
 ) -> list[list[str]]:
     paths: list[list[str]] = find_paths(start, [], small_cave_visit_max)
     return [path for path in paths if path[0] == "start" and path[-1] == "end"]
 
 
 def find_paths(
-    current_node: GraphNode, current_path: list[str], small_cave_visit_max: int
+    current_node: GraphNode,
+    current_path: list[str],
+    small_cave_visit_max: int,
 ) -> list[list[str]]:
     current_path.append(current_node.name)
 

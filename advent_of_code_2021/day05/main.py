@@ -30,13 +30,13 @@ def read_input(filename: Path | str) -> list[Line]:
             # Horizontal and Vertical Lines
             if start_x == end_x or start_y == end_y:
                 input_lines.append(
-                    Line(Point2D(start_x, start_y), Point2D(end_x, end_y))
+                    Line(Point2D(start_x, start_y), Point2D(end_x, end_y)),
                 )
 
             # 45 Degree Diagonal Lines
             if _is_diagonal(start_x, start_y, end_x, end_y):
                 input_lines.append(
-                    Line(Point2D(start_x, start_y), Point2D(end_x, end_y))
+                    Line(Point2D(start_x, start_y), Point2D(end_x, end_y)),
                 )
 
     return input_lines
@@ -88,7 +88,8 @@ def _initialize_line_graph(input_lines: list[Line]) -> list[list[int]]:
 
 
 def plot_lines(
-    input_lines: list[Line], include_diagonals: bool = False
+    input_lines: list[Line],
+    include_diagonals: bool = False,
 ) -> list[list[int]]:
     line_graph = _initialize_line_graph(input_lines)
 
@@ -105,10 +106,12 @@ def plot_lines(
             continue
 
         x_increment, start_x, end_x = _get_increment_start_and_end(
-            input_line.start.x, input_line.end.x
+            input_line.start.x,
+            input_line.end.x,
         )
         y_increment, start_y, end_y = _get_increment_start_and_end(
-            input_line.start.y, input_line.end.y
+            input_line.start.y,
+            input_line.end.y,
         )
         line_length = max(
             abs(input_line.start.x - input_line.end.x),

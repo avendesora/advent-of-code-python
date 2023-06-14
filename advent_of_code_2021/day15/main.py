@@ -22,7 +22,7 @@ def get_edges(risk_levels: list[list[int]]) -> list[tuple[int, int, int]]:
                         current_cell,
                         current_cell - 1,
                         risk_levels[row_index][column_index - 1],
-                    )
+                    ),
                 )
 
             if row_index > 0:
@@ -31,7 +31,7 @@ def get_edges(risk_levels: list[list[int]]) -> list[tuple[int, int, int]]:
                         current_cell,
                         current_cell - row_length,
                         risk_levels[row_index - 1][column_index],
-                    )
+                    ),
                 )
 
             with suppress(IndexError):
@@ -40,7 +40,7 @@ def get_edges(risk_levels: list[list[int]]) -> list[tuple[int, int, int]]:
                         current_cell,
                         current_cell + 1,
                         risk_levels[row_index][column_index + 1],
-                    )
+                    ),
                 )
 
             with suppress(IndexError):
@@ -49,7 +49,7 @@ def get_edges(risk_levels: list[list[int]]) -> list[tuple[int, int, int]]:
                         current_cell,
                         current_cell + row_length,
                         risk_levels[row_index + 1][column_index],
-                    )
+                    ),
                 )
 
     return edges
@@ -77,7 +77,8 @@ def get_full_risk_levels(risk_levels: list[list[int]]) -> list[list[int]]:
     full_risk_levels: list[list[int]] = []
 
     for row_increase_index, row_index in itertools.product(
-        range(5), range(len(risk_levels))
+        range(5),
+        range(len(risk_levels)),
     ):
         new_row: list[int] = []
 
@@ -99,13 +100,15 @@ if __name__ == "__main__":
 
     # Part One
     risk_graph: WeightedGraph = get_weighted_graph(
-        get_edges(input_array), number_of_vertices
+        get_edges(input_array),
+        number_of_vertices,
     )
     print(f"The total least risk is {risk_graph.get_total_least_weight()}.")
 
     # Part Two
     full_input_array: list[list[int]] = get_full_risk_levels(input_array)
     full_risk_graph: WeightedGraph = get_weighted_graph(
-        get_edges(full_input_array), number_of_vertices * 25
+        get_edges(full_input_array),
+        number_of_vertices * 25,
     )
     print(f"The full total least risk is {full_risk_graph.get_total_least_weight()}.")

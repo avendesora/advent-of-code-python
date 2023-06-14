@@ -22,7 +22,7 @@ def read_input(filename: Path | str) -> tuple[list[int], list[list[list[int]]]]:
                 continue
 
             current_board.append(
-                [int(value) for value in line.split(" ") if len(value.strip()) > 0]
+                [int(value) for value in line.split(" ") if len(value.strip()) > 0],
             )
 
             if len(current_board) == 5:
