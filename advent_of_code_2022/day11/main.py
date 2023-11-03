@@ -146,7 +146,7 @@ def run_inspections(
                 monkey_inspection_counts[monkey_number] += 1
 
     sorted_monkey_inspection_counts: list[int] = sorted(
-        monkey_inspection_counts.values()
+        monkey_inspection_counts.values(),
     )
     return sorted_monkey_inspection_counts[-1] * sorted_monkey_inspection_counts[-2]
 
