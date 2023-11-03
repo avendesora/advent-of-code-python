@@ -63,11 +63,7 @@ def part_one(
     min_x: int,
     max_x: int,
 ) -> int:
-    differences: list[int] = []
-
-    for input_item in input_data:
-        differences.append(input_item.distance)
-
+    differences: list[int] = [input_item.distance for input_item in input_data]
     # offset: int = abs(max_x - min_x)
     offset: int = max(differences)
     no_beacon_x_values: set[int] = set()
