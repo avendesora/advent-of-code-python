@@ -6,6 +6,9 @@ from pathlib import Path
 from typing import Any
 
 from helpers import clean_line
+from helpers.logger import get_logger
+
+LOGGER = get_logger("2022-day-13")
 
 
 @dataclass
@@ -19,21 +22,21 @@ def read_input(filename: Path | str) -> list[PacketPair]:
     current_left = None
     current_right = None
 
-    with open(filename, encoding="utf-8") as lines:
+    with Path(filename).open(encoding="utf-8") as lines:
         for line in lines:
-            line = clean_line(line)
+            cleaned_line = clean_line(line)
 
-            if line == "":
+            if cleaned_line == "":
                 packet_pairs.append(PacketPair(current_left or [], current_right or []))
                 current_left = None
                 current_right = None
                 continue
 
             if current_left is None:
-                current_left = eval(line)
+                current_left = eval(cleaned_line)
                 continue
 
-            current_right = eval(line)
+            current_right = eval(cleaned_line)
 
     packet_pairs.append(PacketPair(current_left or [], current_right or []))
 
@@ -108,5 +111,5 @@ def part_two(input_data: list[PacketPair]) -> int:
 
 if __name__ == "__main__":
     day13_input = read_input("input.txt")
-    print(part_one(day13_input))
-    print(part_two(day13_input))
+    LOGGER.info(part_one(day13_input))
+    LOGGER.info(part_two(day13_input))

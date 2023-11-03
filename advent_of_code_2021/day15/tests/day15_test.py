@@ -9,7 +9,7 @@ from advent_of_code_2021.day15.main import increase_risk
 from helpers import read_input_as_2d_int_array
 from helpers.simple_dijkstra import get_weighted_graph
 
-CURRENT_DIRECTORY = Path(os.path.dirname(os.path.realpath(__file__)))
+CURRENT_DIRECTORY = Path(Path(os.path.realpath(__file__)).parent)
 
 
 def test_day_15_read_input(input_array: list[list[int]]) -> None:

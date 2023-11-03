@@ -1,6 +1,9 @@
 from __future__ import annotations
 
 from helpers import read_input_as_int_array_from_csv
+from helpers.logger import get_logger
+
+LOGGER = get_logger("2021-day-06")
 
 
 def grow_one_day(initial_school: list[int]) -> list[int]:
@@ -66,16 +69,17 @@ if __name__ == "__main__":
 
     # Part One
     school = original_school.copy()
-    # print(f"Initial state: {school}")
+    LOGGER.debug("Initial state: %s", str(school))
 
     number_of_days = 80
 
     for _ in range(number_of_days):
         school = grow_one_day(school)
 
-    print(
-        f"There are a total of {len(school)} fish in the school after "
-        f"{number_of_days} days."
+    LOGGER.info(
+        "There are a total of %d fish in the school after %d days.",
+        len(school),
+        number_of_days,
     )
 
     # Part Two
@@ -85,7 +89,8 @@ if __name__ == "__main__":
     for _ in range(number_of_days2):
         school_dict = update_school_dict(school_dict)
 
-    print(
-        f"There are a total of {sum(school_dict.values())} fish in the school after "
-        f"{number_of_days2} days."
+    LOGGER.info(
+        "There are a total of %d fish in the school after %d days.",
+        sum(school_dict.values()),
+        number_of_days2,
     )

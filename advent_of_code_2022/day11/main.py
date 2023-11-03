@@ -7,6 +7,9 @@ from pathlib import Path
 from typing import Callable
 
 from helpers import clean_line
+from helpers.logger import get_logger
+
+LOGGER = get_logger("2022-day-11")
 
 
 @dataclass
@@ -46,7 +49,7 @@ def read_input(filename: Path | str) -> dict[int, Monkey]:
     monkeys: dict[int, Monkey] = {}
     current_monkey = None
 
-    with open(filename, encoding="utf-8") as lines:
+    with Path(filename).open(encoding="utf-8") as lines:
         for line in lines:
             cleaned_line = clean_line(line)
 
@@ -158,7 +161,7 @@ def part_two(monkeys: dict[int, Monkey]) -> int:
 
 
 if __name__ == "__main__":
-    day10_input = read_input("input.txt")
-    print(part_one(day10_input))
-    day10_input = read_input("input.txt")
-    print(part_two(day10_input))
+    day11_input = read_input("input.txt")
+    LOGGER.info(part_one(day11_input))
+    day11_input = read_input("input.txt")
+    LOGGER.info(part_two(day11_input))

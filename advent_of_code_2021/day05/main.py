@@ -7,6 +7,9 @@ from pathlib import Path
 
 from helpers import Point2D
 from helpers import clean_line
+from helpers.logger import get_logger
+
+LOGGER = get_logger("2021-day-05")
 
 
 @dataclass
@@ -18,7 +21,7 @@ class Line:
 def read_input(filename: Path | str) -> list[Line]:
     input_lines: list[Line] = []
 
-    with open(filename, encoding="utf-8") as file_lines:
+    with Path(filename).open(encoding="utf-8") as file_lines:
         for file_line in file_lines:
             if len(clean_line(file_line).strip()) == 0:
                 continue
@@ -156,21 +159,21 @@ if __name__ == "__main__":
     # Part One
     plot = plot_lines(lines)
 
-    # for plot_line in plot:
-    #     print(plot_line)
+    for plot_line in plot:
+        LOGGER.debug(plot_line)
 
-    print(
-        f"There are {count_intersections(plot)} points where at least two lines "
-        f"overlap."
+    LOGGER.info(
+        "There are %d points where at least two lines overlap.",
+        count_intersections(plot),
     )
 
     # Part Two
     plot2 = plot_lines(lines, True)
 
-    # for plot_line in plot2:
-    #     print(plot_line)
+    for plot_line in plot2:
+        LOGGER.debug(plot_line)
 
-    print(
-        f"There are {count_intersections(plot2)} points where at least two lines "
-        f"overlap."
+    LOGGER.info(
+        "There are %d points where at least two lines overlap.",
+        count_intersections(plot2),
     )

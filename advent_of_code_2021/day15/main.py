@@ -4,8 +4,11 @@ import itertools
 from contextlib import suppress
 
 from helpers import read_input_as_2d_int_array
+from helpers.logger import get_logger
 from helpers.simple_dijkstra import WeightedGraph
 from helpers.simple_dijkstra import get_weighted_graph
+
+LOGGER = get_logger("2021-day-15")
 
 
 def get_edges(risk_levels: list[list[int]]) -> list[tuple[int, int, int]]:
@@ -103,7 +106,8 @@ if __name__ == "__main__":
         get_edges(input_array),
         number_of_vertices,
     )
-    print(f"The total least risk is {risk_graph.get_total_least_weight()}.")
+
+    LOGGER.info("The total least risk is %d.", risk_graph.get_total_least_weight())
 
     # Part Two
     full_input_array: list[list[int]] = get_full_risk_levels(input_array)
@@ -111,4 +115,8 @@ if __name__ == "__main__":
         get_edges(full_input_array),
         number_of_vertices * 25,
     )
-    print(f"The full total least risk is {full_risk_graph.get_total_least_weight()}.")
+
+    LOGGER.info(
+        "The full total least risk is %d.",
+        full_risk_graph.get_total_least_weight(),
+    )

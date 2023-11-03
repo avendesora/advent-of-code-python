@@ -1,8 +1,15 @@
 from __future__ import annotations
 
-from pathlib import Path
+from typing import TYPE_CHECKING
 
 from helpers import read_input_as_2d_int_array
+from helpers.logger import get_logger
+
+if TYPE_CHECKING:
+    from pathlib import Path
+
+
+LOGGER = get_logger("2022-day-08")
 
 
 def read_input(filename: Path | str) -> list[list[int]]:
@@ -49,11 +56,11 @@ def part_one(input_data: list[list[int]]) -> int:
 
     for row_index, row in enumerate(input_data):
         for column_index, cell in enumerate(row):
-            if row_index in {0, len(input_data) - 1}:
+            if row_index in [0, len(input_data) - 1]:
                 visible_count += 1
                 continue
 
-            if column_index in {0, len(row) - 1}:
+            if column_index in [0, len(row) - 1]:
                 visible_count += 1
                 continue
 
@@ -97,5 +104,5 @@ def part_two(input_data: list[list[int]]) -> int:
 
 if __name__ == "__main__":
     day8_input = read_input("input.txt")
-    print(part_one(day8_input))
-    print(part_two(day8_input))
+    LOGGER.info(part_one(day8_input))
+    LOGGER.info(part_two(day8_input))

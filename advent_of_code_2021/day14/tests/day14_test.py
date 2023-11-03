@@ -12,7 +12,7 @@ from advent_of_code_2021.day14.main import get_pairs_from_polymer
 from advent_of_code_2021.day14.main import read_input
 from advent_of_code_2021.day14.main import update_pairs
 
-CURRENT_DIRECTORY = Path(os.path.dirname(os.path.realpath(__file__)))
+CURRENT_DIRECTORY = Path(Path(os.path.realpath(__file__)).parent)
 
 
 def test_day_14_read_input(sample_data: tuple[str, dict[str, str]]) -> None:

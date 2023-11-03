@@ -1,10 +1,16 @@
 from __future__ import annotations
 
 import itertools
-from pathlib import Path
+from typing import TYPE_CHECKING
 
 from helpers import Point2D
 from helpers import read_input_as_string_array
+from helpers.logger import get_logger
+
+if TYPE_CHECKING:
+    from pathlib import Path
+
+LOGGER = get_logger("2022-day-14")
 
 
 def read_input(filename: Path | str) -> tuple[list[list[Point2D]], int, int, int]:
@@ -131,7 +137,7 @@ def part_two(grid: list[list[str]], x_offset: int) -> int:
 if __name__ == "__main__":
     day14_input, x_min, x_max, y_max = read_input("input.txt")
     grid_input: list[list[str]] = draw_grid(day14_input, x_min, x_max, y_max)
-    print(part_one(grid_input, x_min))
+    LOGGER.info(part_one(grid_input, x_min))
 
     grid_input = draw_grid(day14_input, x_min, x_max, y_max)
-    print(part_two(grid_input, x_min))
+    LOGGER.info(part_two(grid_input, x_min))

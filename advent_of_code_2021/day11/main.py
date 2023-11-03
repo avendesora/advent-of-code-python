@@ -1,6 +1,9 @@
 from __future__ import annotations
 
 from helpers import read_input_as_2d_int_array
+from helpers.logger import get_logger
+
+LOGGER = get_logger("2021-day-11")
 
 
 def take_step(energy_levels: list[list[int]]) -> list[list[int]]:
@@ -126,11 +129,12 @@ if __name__ == "__main__":
         read_input_as_2d_int_array("input.txt"),
         number_of_steps,
     )
-    print(
-        f"After {number_of_steps} steps, there have been a total of "
-        f"{number_of_flashes} flashes."
+    LOGGER.info(
+        "After %d steps, there have been a total of %d flashes.",
+        number_of_steps,
+        number_of_flashes,
     )
 
     # Part Two
     first_flash = find_first_simultaneous_flash(read_input_as_2d_int_array("input.txt"))
-    print(f"The first step at which all octopuses flash is {first_flash}.")
+    LOGGER.info("The first step at which all octopuses flash is %d.", first_flash)

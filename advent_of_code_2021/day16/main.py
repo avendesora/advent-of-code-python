@@ -2,9 +2,15 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 from math import prod
-from pathlib import Path
+from typing import TYPE_CHECKING
 
 from helpers import read_input_as_string_array
+from helpers.logger import get_logger
+
+if TYPE_CHECKING:
+    from pathlib import Path
+
+LOGGER = get_logger("2021-day-16")
 
 
 @dataclass
@@ -22,7 +28,7 @@ def read_input(filename: Path | str) -> str:
 
 def convert_hex_to_binary(hex_string: str) -> str:
     chunks = [hex_string[i : i + 2] for i in range(0, len(hex_string), 2)]
-    return "".join(["{:08b}".format(int(chunk, 16)) for chunk in chunks])
+    return "".join([f"{int(chunk, 16):08b}" for chunk in chunks])
 
 
 def parse_packets(
@@ -191,5 +197,5 @@ def part_two(binary_data: str) -> int:
 
 if __name__ == "__main__":
     binary_input: str = read_input("input.txt")
-    print(part_one(binary_input))
-    print(part_two(binary_input))
+    LOGGER.info(part_one(binary_input))
+    LOGGER.info(part_two(binary_input))

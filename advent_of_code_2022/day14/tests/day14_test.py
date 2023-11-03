@@ -9,7 +9,7 @@ from advent_of_code_2022.day14.main import part_two
 from advent_of_code_2022.day14.main import read_input
 from helpers import Point2D
 
-CURRENT_DIRECTORY = Path(os.path.dirname(os.path.realpath(__file__)))
+CURRENT_DIRECTORY = Path(Path(os.path.realpath(__file__)).parent)
 
 
 def test_read_input() -> None:

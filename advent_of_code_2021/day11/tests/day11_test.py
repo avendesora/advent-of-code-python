@@ -9,7 +9,7 @@ from advent_of_code_2021.day11.main import take_step
 from advent_of_code_2021.day11.main import take_steps
 from helpers import read_input_as_2d_int_array
 
-CURRENT_DIRECTORY = Path(os.path.dirname(os.path.realpath(__file__)))
+CURRENT_DIRECTORY = Path(Path(os.path.realpath(__file__)).parent)
 
 
 def test_day_11_read_input() -> None:

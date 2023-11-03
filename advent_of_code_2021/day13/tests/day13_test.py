@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import os
 from pathlib import Path
+from typing import TYPE_CHECKING
 
 from advent_of_code_2021.day13.main import Axis
 from advent_of_code_2021.day13.main import count_visible_dots
@@ -9,9 +10,12 @@ from advent_of_code_2021.day13.main import execute_instruction
 from advent_of_code_2021.day13.main import initialize_pattern
 from advent_of_code_2021.day13.main import printable_pattern
 from advent_of_code_2021.day13.main import read_input
-from helpers import Point2D
 
-CURRENT_DIRECTORY = Path(os.path.dirname(os.path.realpath(__file__)))
+if TYPE_CHECKING:
+    from helpers import Point2D
+
+
+CURRENT_DIRECTORY = Path(Path(os.path.realpath(__file__)).parent)
 
 
 def test_day_13_read_input(

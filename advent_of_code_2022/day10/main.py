@@ -1,9 +1,16 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
-from pathlib import Path
+from typing import TYPE_CHECKING
 
 from helpers import read_input_as_string_array
+from helpers.logger import get_logger
+
+if TYPE_CHECKING:
+    from pathlib import Path
+
+
+LOGGER = get_logger("2022-day-10")
 
 
 @dataclass(eq=True, frozen=True)
@@ -61,7 +68,7 @@ def part_two(input_data: list[Operation]) -> list[str]:
     pixels: str = ""
 
     for cycle in range(240):
-        pixels += "#" if cycle % 40 in {x, x - 1, x + 1} else "."
+        pixels += "#" if cycle % 40 in [x, x - 1, x + 1] else "."
         get_next, index, x = run_cycle(get_next, index, x, input_data)
 
     return [pixels[i : i + 40] for i in range(0, len(pixels), 40)]
@@ -69,8 +76,8 @@ def part_two(input_data: list[Operation]) -> list[str]:
 
 if __name__ == "__main__":
     day10_input = read_input("input.txt")
-    print(part_one(day10_input))
-    print()
+    LOGGER.info(part_one(day10_input))
+    LOGGER.info("")
 
     for crt_line in part_two(day10_input):
-        print(crt_line.replace(".", " "))
+        LOGGER.info(crt_line.replace(".", " "))
