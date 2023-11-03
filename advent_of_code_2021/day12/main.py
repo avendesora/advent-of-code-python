@@ -5,6 +5,9 @@ from pathlib import Path
 from typing import Any
 
 from helpers import clean_line
+from helpers.logger import get_logger
+
+LOGGER = get_logger("2021-day-12")
 
 
 @dataclass
@@ -14,7 +17,7 @@ class GraphNode:
 
 
 def read_input(filename: Path | str) -> list[tuple[str, ...]]:
-    with open(filename, encoding="utf-8") as lines:
+    with Path(filename).open(encoding="utf-8") as lines:
         return [tuple(clean_line(line).split("-")) for line in lines]
 
 
@@ -87,11 +90,12 @@ if __name__ == "__main__":
 
     # Part One
     valid_paths = find_valid_paths(graph)
-    print(f"There are {len(valid_paths)} valid paths through this cave system.")
+    LOGGER.info("There are %d valid paths through this cave system.", len(valid_paths))
 
     # Part Two
     valid_paths2 = find_valid_paths(graph, 2)
-    print(
-        f"There are {len(valid_paths2)} valid paths through this cave system with "
-        f"visiting small caves twice at most."
+    LOGGER.info(
+        "There are %d valid paths through this cave system with visiting small caves "
+        "twice at most.",
+        len(valid_paths2),
     )

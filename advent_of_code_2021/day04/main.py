@@ -5,6 +5,9 @@ from pathlib import Path
 
 from helpers import clean_line
 from helpers import transpose_2d_array
+from helpers.logger import get_logger
+
+LOGGER = get_logger("2021-day-04")
 
 
 def read_input(filename: Path | str) -> tuple[list[int], list[list[list[int]]]]:
@@ -12,7 +15,7 @@ def read_input(filename: Path | str) -> tuple[list[int], list[list[list[int]]]]:
     bingo_boards: list[list[list[int]]] = []
     current_board: list[list[int]] = []
 
-    with open(filename, encoding="utf-8") as lines:
+    with Path(filename).open(encoding="utf-8") as lines:
         for line in lines:
             if len(clean_line(line).strip()) == 0:
                 continue
@@ -79,7 +82,7 @@ if __name__ == "__main__":
             final_score = best_score * number
             break
 
-    print(f"Best score is {final_score}.")
+    LOGGER.info("Best score is %d", final_score)
 
     # Part Two
     boards = original_boards.copy()
@@ -103,4 +106,4 @@ if __name__ == "__main__":
         if losing_board_score > 0:
             break
 
-    print(f"Losing score is {losing_board_score}.")
+    LOGGER.info("Losing score is %d", losing_board_score)

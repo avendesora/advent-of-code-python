@@ -1,6 +1,9 @@
 from __future__ import annotations
 
 from helpers import read_input_as_string_array
+from helpers.logger import get_logger
+
+LOGGER = get_logger("2021-day-10")
 
 OPEN_AND_CLOSE_CHARACTERS: dict[str, str] = {
     "(": ")",
@@ -99,7 +102,7 @@ if __name__ == "__main__":
     lines = read_input_as_string_array("input.txt")
 
     # Part One
-    print(f"The total syntax error score is {get_syntax_error_score(lines)}.")
+    LOGGER.info("The total syntax error score is %d.", get_syntax_error_score(lines))
 
     # Part Two
-    print(f"The completion score is {get_final_completion_score(lines)}.")
+    LOGGER.info("The completion score is %d.", get_final_completion_score(lines))

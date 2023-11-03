@@ -7,7 +7,7 @@ from advent_of_code_2022.day02.main import part_one
 from advent_of_code_2022.day02.main import part_two
 from advent_of_code_2022.day02.main import read_input
 
-CURRENT_DIRECTORY = Path(os.path.dirname(os.path.realpath(__file__)))
+CURRENT_DIRECTORY = Path(Path(os.path.realpath(__file__)).parent)
 
 
 def test_read_input() -> None:

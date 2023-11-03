@@ -1,11 +1,17 @@
 from __future__ import annotations
 
-from pathlib import Path
 from statistics import median
 from statistics import mode
+from typing import TYPE_CHECKING
 
 from helpers import read_input_as_2d_int_array
 from helpers import transpose_2d_array
+from helpers.logger import get_logger
+
+if TYPE_CHECKING:
+    from pathlib import Path
+
+LOGGER = get_logger("2021-day-03")
 
 
 def read_input(filename: Path | str) -> list[list[int]]:
@@ -86,7 +92,7 @@ if __name__ == "__main__":
     # Part One
     gamma_rate, epsilon_rate = get_gamma_and_epsilon_rates(binary_data)
     power_consumption = get_power_consumption(gamma_rate, epsilon_rate)
-    print(f"The power consumption of the submarine is {power_consumption}.")
+    LOGGER.info("The power consumption of the submarine is %d", power_consumption)
 
     # Part Two
     oxygen_generator_rating = get_oxygen_generator_rating(binary_data)
@@ -95,4 +101,4 @@ if __name__ == "__main__":
         oxygen_generator_rating,
         co2_scrubber_rating,
     )
-    print(f"The life support rating of the submarine is {life_support_rating}.")
+    LOGGER.info("The life support rating of the submarine is %d", life_support_rating)

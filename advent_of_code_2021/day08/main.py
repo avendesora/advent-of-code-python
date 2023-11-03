@@ -3,13 +3,16 @@ from __future__ import annotations
 from pathlib import Path
 
 from helpers import clean_line
+from helpers.logger import get_logger
+
+LOGGER = get_logger("2021-day-08")
 
 
 def read_input(filename: Path | str) -> tuple[list[list[str]], list[list[str]]]:
     input_signal_patterns: list[list[str]] = []
     input_output_values: list[list[str]] = []
 
-    with open(filename, encoding="utf-8") as file_lines:
+    with Path(filename).open(encoding="utf-8") as file_lines:
         for file_line in file_lines:
             clean_file_line = clean_line(file_line).strip()
 
@@ -174,12 +177,12 @@ def update_mappings_for_digits_2_3_5(
             continue
 
         # Digit 5
-        if list(segment_mappings[1])[0] in signal_pattern_value:
+        if next(iter(segment_mappings[1])) in signal_pattern_value:
             digit_mappings[5] = signal_pattern_value
             continue
 
         # Digit 2
-        if list(segment_mappings[4])[0] in signal_pattern_value:
+        if next(iter(segment_mappings[4])) in signal_pattern_value:
             digit_mappings[2] = signal_pattern_value
             continue
 
@@ -225,12 +228,9 @@ def part_two(
         digits = get_digits(signal_pattern)
         output_value = output_values[index]
 
-        digit_string = ""
-
-        for value in output_value:
-            sorted_value = "".join(sorted(value))
-            digit_string += str(digits.index(sorted_value))
-
+        digit_string = "".join(
+            str(digits.index("".join(sorted(value)))) for value in output_value
+        )
         total += int(digit_string)
 
     return total
@@ -239,6 +239,6 @@ def part_two(
 if __name__ == "__main__":
     signal_patterns_input, output_values_input = read_input("input.txt")
     part_one_total = part_one(output_values_input)
-    print(f"The digits 1, 4, 7, or 8 appear {part_one_total} times.")
+    LOGGER.info("The digits 1, 4, 7, or 8 appear %d times.", part_one_total)
     part_two_total = part_two(signal_patterns_input, output_values_input)
-    print(f"The total value is {part_two_total}.")
+    LOGGER.info("The total value is %d.", part_two_total)

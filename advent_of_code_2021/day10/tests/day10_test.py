@@ -11,7 +11,7 @@ from advent_of_code_2021.day10.main import get_invalid_characters
 from advent_of_code_2021.day10.main import get_syntax_error_score
 from helpers import read_input_as_string_array
 
-CURRENT_DIRECTORY = Path(os.path.dirname(os.path.realpath(__file__)))
+CURRENT_DIRECTORY = Path(Path(os.path.realpath(__file__)).parent)
 
 
 def test_day_10_read_input() -> None:

@@ -2,10 +2,17 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 from enum import Enum
-from pathlib import Path
+from typing import TYPE_CHECKING
 
 from helpers import Point2D
 from helpers import read_input_as_string_array
+from helpers.logger import get_logger
+
+if TYPE_CHECKING:
+    from pathlib import Path
+
+
+LOGGER = get_logger("2022-day-09")
 
 
 class Direction(Enum):
@@ -81,14 +88,14 @@ def get_tail_locations(
             # Update each knot from the head to the tail
             for index, knot in enumerate(knots):
                 if index == 0:  # Head
-                    knot = Point2D(
+                    knots[index] = Point2D(
                         knot.x + motion.direction.x_value,
                         knot.y + motion.direction.y_value,
                     )
-                else:  # All other knots
-                    knot = move_next_knot(knots[index - 1], knot)
+                    continue
 
-                knots[index] = knot
+                # All other knots
+                knots[index] = move_next_knot(knots[index - 1], knot)
 
             # Add the tail knot location (the last knot) to the set of tail locations.
             tail_locations.add(knots[-1])
@@ -106,5 +113,5 @@ def part_two(input_data: list[Motion]) -> int:
 
 if __name__ == "__main__":
     day9_input = read_input("input.txt")
-    print(part_one(day9_input))
-    print(part_two(day9_input))
+    LOGGER.info(part_one(day9_input))
+    LOGGER.info(part_two(day9_input))

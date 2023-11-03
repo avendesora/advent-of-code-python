@@ -1,9 +1,16 @@
 from __future__ import annotations
 
-from pathlib import Path
+from typing import TYPE_CHECKING
 
 from advent_of_code_2022.day07.models import Directory
 from helpers import read_input_as_string_array
+from helpers.logger import get_logger
+
+if TYPE_CHECKING:
+    from pathlib import Path
+
+
+LOGGER = get_logger("2022-day-07")
 
 
 def read_input(filename: Path | str) -> list[str]:
@@ -80,5 +87,5 @@ if __name__ == "__main__":
     day7_input = read_input("input.txt")
     root_directory = generate_directory_structure(day7_input)
     sizes_dict = get_sizes(root_directory)
-    print(part_one(sizes_dict))
-    print(part_two(root_directory, sizes_dict))
+    LOGGER.info(part_one(sizes_dict))
+    LOGGER.info(part_two(root_directory, sizes_dict))

@@ -3,6 +3,9 @@ from __future__ import annotations
 from pathlib import Path
 
 from helpers import clean_line
+from helpers.logger import get_logger
+
+LOGGER = get_logger("2021-day-14")
 
 
 def read_input(filename: Path | str) -> tuple[str, dict[str, str]]:
@@ -10,7 +13,7 @@ def read_input(filename: Path | str) -> tuple[str, dict[str, str]]:
     pair_insertion_rules_input: dict[str, str] = {}
     blank_line_found: bool = False
 
-    with open(filename, encoding="utf-8") as lines:
+    with Path(filename).open(encoding="utf-8") as lines:
         for line in lines:
             cleaned_line = clean_line(line).strip()
 
@@ -176,9 +179,9 @@ if __name__ == "__main__":
         characters,
     )
 
-    print(f"Most common element ({largest_element}, {largest_count}).")
-    print(f"Least common element ({smallest_element}, {smallest_count}).")
-    print(f"Difference = {largest_count - smallest_count}.")
+    LOGGER.info("Most common element (%s, %d).", largest_element, largest_count)
+    LOGGER.info("Least common element (%s, %d).", smallest_element, smallest_count)
+    LOGGER.info("Difference = %d.", largest_count - smallest_count)
 
     # Part Two
     polymer_template, pair_insertion_rules = read_input("input.txt")
@@ -194,6 +197,6 @@ if __name__ == "__main__":
         smallest_count,
     ) = evaluate_counts_part_two(initial_pairs, polymer_template)
 
-    print(f"Most common element ({largest_element}, {largest_count}).")
-    print(f"Least common element ({smallest_element}, {smallest_count}).")
-    print(f"Difference = {largest_count - smallest_count}.")
+    LOGGER.info("Most common element (%s, %d).", largest_element, largest_count)
+    LOGGER.info("Least common element (%s, %d).", smallest_element, smallest_count)
+    LOGGER.info("Difference = %d.", largest_count - smallest_count)

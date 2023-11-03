@@ -4,6 +4,9 @@ from enum import IntEnum
 from pathlib import Path
 
 from helpers import clean_line
+from helpers.logger import get_logger
+
+LOGGER = get_logger("2022-day-02")
 
 WIN_SCORE = 6
 LOSS_SCORE = 0
@@ -29,7 +32,7 @@ class Shape(IntEnum):
 def read_input(filename: Path | str) -> list[list[str]]:
     input_2d_array: list[list[str]] = []
 
-    with open(filename, encoding="utf-8") as file_lines:
+    with Path(filename).open(encoding="utf-8") as file_lines:
         for file_line in file_lines:
             clean_file_line = clean_line(file_line).strip()
 
@@ -105,5 +108,5 @@ def part_two(input_data: list[list[str]]) -> int:
 
 if __name__ == "__main__":
     day2_input = read_input("input.txt")
-    print(part_one(day2_input))
-    print(part_two(day2_input))
+    LOGGER.info(part_one(day2_input))
+    LOGGER.info(part_two(day2_input))

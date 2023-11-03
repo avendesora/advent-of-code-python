@@ -6,6 +6,9 @@ from pathlib import Path
 from helpers import Point2D
 from helpers import clean_line
 from helpers import transpose_2d_array
+from helpers.logger import get_logger
+
+LOGGER = get_logger("2021-day-13")
 
 
 class Axis(Enum):
@@ -18,7 +21,7 @@ def read_input(filename: Path | str) -> tuple[list[Point2D], list[tuple[Axis, in
     input_dots: list[Point2D] = []
     input_instructions: list[tuple[Axis, int]] = []
 
-    with open(filename, encoding="utf-8") as lines:
+    with Path(filename).open(encoding="utf-8") as lines:
         for line in lines:
             cleaned_line = clean_line(line).strip()
 
@@ -118,7 +121,7 @@ if __name__ == "__main__":
     for instruction in instructions[:1]:
         pattern = execute_instruction(pattern, instruction)
 
-    print(f"There are currently {count_visible_dots(pattern)} dots visible.")
+    LOGGER.info("There are currently %d dots visible.\n", count_visible_dots(pattern))
 
     # Part Two
     dots, instructions = read_input("input.txt")
@@ -127,4 +130,4 @@ if __name__ == "__main__":
     for instruction in instructions:
         pattern = execute_instruction(pattern, instruction)
 
-    print(printable_pattern(pattern, " "))
+    LOGGER.info(printable_pattern(pattern, " "))

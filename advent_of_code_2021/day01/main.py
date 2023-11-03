@@ -1,6 +1,9 @@
 from __future__ import annotations
 
 from helpers import read_input_as_int_array
+from helpers.logger import get_logger
+
+LOGGER = get_logger("2021-day-01")
 
 
 def count_larger_depths(depth_numbers: list[int]) -> int:
@@ -35,11 +38,11 @@ def apply_sliding_window(depth_numbers: list[int], window_size: int) -> list[int
 if __name__ == "__main__":
     # Part One
     depths: list[int] = read_input_as_int_array("input.txt")
-    print(f"The depth increased {count_larger_depths(depths)} times.")
+    LOGGER.info("The depth increased %d times.", count_larger_depths(depths))
 
     # Part Two
     depth_sums: list[int] = apply_sliding_window(depths, 3)
-    print(
-        f"The depth (using a sliding window) increased "
-        f"{count_larger_depths(depth_sums)} times."
+    LOGGER.info(
+        "The depth (using a sliding window) increased %d times.",
+        count_larger_depths(depth_sums),
     )

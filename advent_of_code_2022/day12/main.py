@@ -2,11 +2,18 @@ from __future__ import annotations
 
 import string
 from contextlib import suppress
-from pathlib import Path
+from typing import TYPE_CHECKING
 
 from helpers import read_input_as_string_array
+from helpers.logger import get_logger
 from helpers.simple_dijkstra import WeightedGraph
 from helpers.simple_dijkstra import get_weighted_graph
+
+if TYPE_CHECKING:
+    from pathlib import Path
+
+
+LOGGER = get_logger("2022-day-12")
 
 
 def read_input(filename: Path | str) -> list[list[str]]:
@@ -115,5 +122,5 @@ if __name__ == "__main__":
     weighted_graph = get_graph(day12_input)
     start, end = get_start_and_end(day12_input)
 
-    print(part_one(weighted_graph, start, end))
-    print(part_two(weighted_graph, end, day12_input))
+    LOGGER.info(part_one(weighted_graph, start, end))
+    LOGGER.info(part_two(weighted_graph, end, day12_input))

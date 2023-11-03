@@ -7,7 +7,7 @@ from advent_of_code_2021.day12.main import find_valid_paths
 from advent_of_code_2021.day12.main import make_graph
 from advent_of_code_2021.day12.main import read_input
 
-CURRENT_DIRECTORY = Path(os.path.dirname(os.path.realpath(__file__)))
+CURRENT_DIRECTORY = Path(Path(os.path.realpath(__file__)).parent)
 
 
 def test_day_12_read_input(sample_data1: list[tuple[str, ...]]) -> None:

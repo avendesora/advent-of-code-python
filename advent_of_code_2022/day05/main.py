@@ -1,9 +1,16 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
-from pathlib import Path
+from typing import TYPE_CHECKING
 
 from helpers import read_input_as_string_array
+from helpers.logger import get_logger
+
+if TYPE_CHECKING:
+    from pathlib import Path
+
+
+LOGGER = get_logger("2022-day-05")
 
 
 @dataclass
@@ -19,17 +26,23 @@ def read_input(filename: Path | str) -> tuple[list[list[str]], list[Instruction]
     stack_dict: dict[int, list[str]] = {}
 
     for line in lines:
-        if line.startswith("move "):
-            line = line.replace("move ", "").replace("from ", "").replace("to ", "")
-            count, from_stack, to_stack = line.split()
+        cleaned_line = line
+
+        if cleaned_line.startswith("move "):
+            cleaned_line = (
+                cleaned_line.replace("move ", "")
+                .replace("from ", "")
+                .replace("to ", "")
+            )
+            count, from_stack, to_stack = cleaned_line.split()
             instructions.append(Instruction(int(count), int(from_stack), int(to_stack)))
             continue
 
-        max_number_of_letters = (len(line) + 1) // 4
+        max_number_of_letters = (len(cleaned_line) + 1) // 4
 
         for index in range(1, max_number_of_letters + 1):
             crate_index = index * 4 - 3
-            crate = line[crate_index]
+            crate = cleaned_line[crate_index]
 
             if crate == " " or crate.isnumeric():
                 continue
@@ -73,8 +86,8 @@ def part_two(stacks: list[list[str]], input_data: list[Instruction]) -> str:
 
 if __name__ == "__main__":
     starting_stacks, day5_input = read_input("input.txt")
-    print(part_one(starting_stacks, day5_input))
+    LOGGER.info(part_one(starting_stacks, day5_input))
 
     # re-read input since the stacks get modified in part one
     starting_stacks, day5_input = read_input("input.txt")
-    print(part_two(starting_stacks, day5_input))
+    LOGGER.info(part_two(starting_stacks, day5_input))

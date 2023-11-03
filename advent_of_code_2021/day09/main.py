@@ -3,6 +3,9 @@ from __future__ import annotations
 from functools import reduce
 
 from helpers import read_input_as_2d_int_array
+from helpers.logger import get_logger
+
+LOGGER = get_logger("2021-day-08")
 
 
 def get_risk_level(point_array: list[list[int]]) -> int:
@@ -141,10 +144,10 @@ if __name__ == "__main__":
     height_map: list[list[int]] = read_input_as_2d_int_array("input.txt")
 
     # Part One
-    print(f"Total risk level = {get_risk_level(height_map)}")
+    LOGGER.info("Total risk level = %d", get_risk_level(height_map))
 
     # Part Two
     basins: list[set[str]] = get_basins(height_map)
     product: int = get_product_size(basins, 3)
 
-    print(f"The product of the sizes of the three largest basins is {product}.")
+    LOGGER.info("The product of the sizes of the three largest basins is %d.", product)

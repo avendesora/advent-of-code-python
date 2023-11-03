@@ -1,8 +1,15 @@
 from __future__ import annotations
 
-from pathlib import Path
+from typing import TYPE_CHECKING
 
 from helpers import read_input_as_string_array
+from helpers.logger import get_logger
+
+if TYPE_CHECKING:
+    from pathlib import Path
+
+
+LOGGER = get_logger("2022-day-04")
 
 
 def read_input(filename: Path | str) -> list[tuple[set[int], set[int]]]:
@@ -40,5 +47,5 @@ def part_two(input_data: list[tuple[set[int], set[int]]]) -> int:
 
 if __name__ == "__main__":
     day4_input = read_input("input.txt")
-    print(part_one(day4_input))
-    print(part_two(day4_input))
+    LOGGER.info(part_one(day4_input))
+    LOGGER.info(part_two(day4_input))
