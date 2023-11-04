@@ -3,8 +3,6 @@ from __future__ import annotations
 import os
 from pathlib import Path
 
-import pytest
-
 from advent_of_code_2022.day16.main import Valve
 from advent_of_code_2022.day16.main import part_one
 from advent_of_code_2022.day16.main import part_two
@@ -29,13 +27,11 @@ def test_read_input() -> None:
     ]
 
 
-@pytest.mark.xfail()
 def test_part_one() -> None:
     input_data = read_input(CURRENT_DIRECTORY / "sample_input.txt")
     assert part_one(input_data) == 1651
 
 
-@pytest.mark.xfail()
 def test_part_two() -> None:
     input_data = read_input(CURRENT_DIRECTORY / "sample_input.txt")
-    assert part_two(input_data) is not None
+    assert part_two(input_data) == 1707
