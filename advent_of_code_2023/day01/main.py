@@ -19,44 +19,34 @@ DIGITS = {
 }
 
 
-def get_next_number(input_string: str) -> str:
-    return next((character for character in input_string if character.isdigit()), "")
+def get_next_number(line: str) -> str:
+    return next((character for character in line if character.isdigit()), "")
 
 
-def get_number(input_string: str) -> int:
-    first_number = get_next_number(input_string)
-    last_number = get_next_number(input_string[::-1])
-    return int(f"{first_number}{last_number}")
+def get_number(line: str) -> int:
+    return int(f"{get_next_number(line)}{get_next_number(line[::-1])}")
 
 
-def get_numbers(input_strings: list[str]) -> list[int]:
-    return [get_number(input_string) for input_string in input_strings]
-
-
-def clean_string(input_string: str) -> str:
-    cleaned_string = input_string
+def clean_line(line: str) -> str:
+    cleaned_line = line
 
     for key, value in DIGITS.items():
-        cleaned_string = cleaned_string.replace(key, value)
+        cleaned_line = cleaned_line.replace(key, value)
 
-    return cleaned_string
-
-
-def get_numbers_2(input_strings: list[str]) -> list[int]:
-    return [get_number(clean_string(input_string)) for input_string in input_strings]
+    return cleaned_line
 
 
-def part_one(input_strings: list[str]) -> int:
-    return sum(get_numbers(input_strings))
+def part_one(input_data: list[str]) -> int:
+    return sum(get_number(line) for line in input_data)
 
 
-def part_two(input_strings: list[str]) -> int:
-    return sum(get_numbers_2(input_strings))
+def part_two(input_data: list[str]) -> int:
+    return sum(get_number(clean_line(line)) for line in input_data)
 
 
 if __name__ == "__main__":
-    input_data = read_input_as_string_array("input.txt")
-    part_one_result = part_one(input_data)
+    input_data1 = read_input_as_string_array("input.txt")
+    part_one_result = part_one(input_data1)
     LOGGER.info("part one = %d", part_one_result)
 
     input_data2 = read_input_as_string_array("input2.txt")
