@@ -83,19 +83,19 @@ def read_input(filename: Path | str) -> list[Game]:
     return [create_game(line) for line in read_input_as_string_array(filename)]
 
 
-def part_one(input_data: list[Game]) -> int:
-    return sum(game.game_id for game in input_data if game.possible)
+def part_one(games: list[Game]) -> int:
+    return sum(game.game_id for game in games if game.possible)
 
 
-def part_two(input_data: list[Game]) -> int:
+def part_two(games: list[Game]) -> int:
     return sum(
-        game.red_minimum * game.green_minimum * game.blue_minimum for game in input_data
+        game.red_minimum * game.green_minimum * game.blue_minimum for game in games
     )
 
 
 if __name__ == "__main__":
-    nathan_input = read_input("input.txt")
-    part_one_result = part_one(nathan_input)
+    input_data = read_input("input.txt")
+    part_one_result = part_one(input_data)
     LOGGER.info("part one = %d", part_one_result)
-    part_two_result = part_two(nathan_input)
+    part_two_result = part_two(input_data)
     LOGGER.info("part two = %d", part_two_result)
