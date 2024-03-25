@@ -27,7 +27,6 @@ def part_one(min_x: int, max_x: int, min_y: int, max_y: int) -> tuple[int, int]:
     y_current = 0
 
     while x_current < max_x and y_current > max_y:
-        ...
 
         x_current += 1
         y_current -= 1

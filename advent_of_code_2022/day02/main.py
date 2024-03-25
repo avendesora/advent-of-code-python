@@ -23,9 +23,7 @@ class Shape(IntEnum):
         return (
             Shape.ROCK
             if character in {"A", "X"}
-            else Shape.PAPER
-            if character in {"B", "Y"}
-            else Shape.SCISSORS
+            else Shape.PAPER if character in {"B", "Y"} else Shape.SCISSORS
         )
 
 
@@ -66,17 +64,13 @@ def get_new_shape(shape: Shape, guide: str) -> Shape:
         return (
             Shape.SCISSORS
             if shape == Shape.ROCK
-            else Shape.ROCK
-            if shape == Shape.PAPER
-            else Shape.PAPER
+            else Shape.ROCK if shape == Shape.PAPER else Shape.PAPER
         )
 
     return (
         Shape.PAPER
         if shape == Shape.ROCK
-        else Shape.SCISSORS
-        if shape == Shape.PAPER
-        else Shape.ROCK
+        else Shape.SCISSORS if shape == Shape.PAPER else Shape.ROCK
     )
 
 
