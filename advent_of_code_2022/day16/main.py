@@ -80,9 +80,11 @@ def _create_state_open_valve(
     return State(
         open_valves=state.open_valves | {valve},
         current_valve=state.current_valve,
-        pressure_released=state.pressure_released + state.current_flow_rate() - offset
-        if increase_pressure_released
-        else state.pressure_released,
+        pressure_released=(
+            state.pressure_released + state.current_flow_rate() - offset
+            if increase_pressure_released
+            else state.pressure_released
+        ),
         current_elephant_valve=state.current_elephant_valve,
     )
 
@@ -95,9 +97,11 @@ def _create_state_move_down_tunnel(
     return State(
         open_valves=state.open_valves,
         current_valve=tunnel_valve,
-        pressure_released=state.pressure_released + state.current_flow_rate()
-        if increase_pressure_released
-        else state.pressure_released,
+        pressure_released=(
+            state.pressure_released + state.current_flow_rate()
+            if increase_pressure_released
+            else state.pressure_released
+        ),
         current_elephant_valve=state.current_elephant_valve,
     )
 

@@ -16,8 +16,7 @@ if TYPE_CHECKING:
 LOGGER = get_logger("2022-day-15", logging.DEBUG)
 
 
-class NoGoodPointFoundError(Exception):
-    ...
+class NoGoodPointFoundError(Exception): ...
 
 
 @lru_cache
