@@ -3,7 +3,7 @@ from __future__ import annotations
 import pytest
 
 
-@pytest.fixture()
+@pytest.fixture
 def sample_data() -> tuple[str, dict[str, str]]:
     return (
         "NNCB",
@@ -28,7 +28,7 @@ def sample_data() -> tuple[str, dict[str, str]]:
     )
 
 
-@pytest.fixture()
+@pytest.fixture
 def pairs() -> dict[str, int]:
     return {
         "CB": 1,

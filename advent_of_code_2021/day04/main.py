@@ -75,8 +75,7 @@ if __name__ == "__main__":
             if check_board(board):
                 score = sum_board(board)
 
-                if score > best_score:
-                    best_score = score
+                best_score = max(score, best_score)
 
         if best_score > 0:
             final_score = best_score * number

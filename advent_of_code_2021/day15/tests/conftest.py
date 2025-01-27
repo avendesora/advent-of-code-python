@@ -3,7 +3,7 @@ from __future__ import annotations
 import pytest
 
 
-@pytest.fixture()
+@pytest.fixture
 def input_array() -> list[list[int]]:
     return [
         [1, 1, 6, 3, 7, 5, 1, 7, 4, 2],
@@ -19,7 +19,7 @@ def input_array() -> list[list[int]]:
     ]
 
 
-@pytest.fixture()
+@pytest.fixture
 def input_array_increased_once() -> list[list[int]]:
     return [
         [2, 2, 7, 4, 8, 6, 2, 8, 5, 3],
@@ -35,7 +35,7 @@ def input_array_increased_once() -> list[list[int]]:
     ]
 
 
-@pytest.fixture()
+@pytest.fixture
 def input_array_increased_twice() -> list[list[int]]:
     return [
         [3, 3, 8, 5, 9, 7, 3, 9, 6, 4],
@@ -51,7 +51,7 @@ def input_array_increased_twice() -> list[list[int]]:
     ]
 
 
-@pytest.fixture()
+@pytest.fixture
 def edges() -> list[tuple[int, int, int]]:
     return [
         (0, 1, 1),

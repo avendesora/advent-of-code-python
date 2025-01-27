@@ -25,14 +25,11 @@ def get_risk_level(point_array: list[list[int]]) -> int:
                 continue
 
             # Check left
-            if column_index > 0 and point_array[row_index][column_index - 1] <= cell:
+            if column_index > 0 and row[column_index - 1] <= cell:
                 continue
 
             # Check right
-            if (
-                column_index < len(row) - 1
-                and point_array[row_index][column_index + 1] <= cell
-            ):
+            if column_index < len(row) - 1 and row[column_index + 1] <= cell:
                 continue
 
             risk_level = cell + 1

@@ -3,7 +3,7 @@ from __future__ import annotations
 import pytest
 
 
-@pytest.fixture()
+@pytest.fixture
 def signal_patterns() -> list[list[str]]:
     return [
         [
@@ -129,7 +129,7 @@ def signal_patterns() -> list[list[str]]:
     ]
 
 
-@pytest.fixture()
+@pytest.fixture
 def output_values() -> list[list[str]]:
     return [
         ["fdgacbe", "cefdb", "cefbgd", "gcbe"],

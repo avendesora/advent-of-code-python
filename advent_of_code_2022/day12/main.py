@@ -63,7 +63,7 @@ def get_edges(input_data: list[list[str]]) -> list[tuple[int, int, int]]:
 
             if column_index > 0 and can_move(
                 cell,
-                input_data[row_index][column_index - 1],
+                row[column_index - 1],
             ):
                 edges.append((current_cell, current_cell - 1, 1))
 
@@ -74,7 +74,7 @@ def get_edges(input_data: list[list[str]]) -> list[tuple[int, int, int]]:
                 edges.append((current_cell, current_cell - row_length, 1))
 
             with suppress(IndexError):
-                if can_move(cell, input_data[row_index][column_index + 1]):
+                if can_move(cell, row[column_index + 1]):
                     edges.append((current_cell, current_cell + 1, 1))
 
             with suppress(IndexError):
