@@ -75,17 +75,13 @@ def _initialize_line_graph(input_lines: list[Line]) -> list[list[int]]:
     max_y: int = 0
 
     for input_line in input_lines:
-        if input_line.end.x + 1 > max_x:
-            max_x = input_line.end.x + 1
+        max_x = max(input_line.end.x + 1, max_x)
 
-        if input_line.start.x + 1 > max_x:
-            max_x = input_line.start.x + 1
+        max_x = max(input_line.start.x + 1, max_x)
 
-        if input_line.end.y + 1 > max_y:
-            max_y = input_line.end.y + 1
+        max_y = max(input_line.end.y + 1, max_y)
 
-        if input_line.start.y + 1 > max_y:
-            max_y = input_line.start.y + 1
+        max_y = max(input_line.start.y + 1, max_y)
 
     return [[0] * max_x for _ in range(max_y)]
 

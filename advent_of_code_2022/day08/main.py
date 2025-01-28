@@ -27,15 +27,15 @@ def get_views(
     top = []
     bottom = []
 
-    for index, row in enumerate(input_data):
+    for index, input_row in enumerate(input_data):
         if index < row_index:
-            top.append(row[column_index])
+            top.append(input_row[column_index])
             continue
 
         if index == row_index:
             continue
 
-        bottom.append(row[column_index])
+        bottom.append(input_row[column_index])
 
     return left, right, top, bottom
 

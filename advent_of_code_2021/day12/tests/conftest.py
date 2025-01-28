@@ -3,7 +3,7 @@ from __future__ import annotations
 import pytest
 
 
-@pytest.fixture()
+@pytest.fixture
 def sample_data1() -> list[tuple[str, ...]]:
     return [
         ("start", "A"),
@@ -16,7 +16,7 @@ def sample_data1() -> list[tuple[str, ...]]:
     ]
 
 
-@pytest.fixture()
+@pytest.fixture
 def sample_data2() -> list[tuple[str, ...]]:
     return [
         ("dc", "end"),
@@ -32,7 +32,7 @@ def sample_data2() -> list[tuple[str, ...]]:
     ]
 
 
-@pytest.fixture()
+@pytest.fixture
 def sample_data3() -> list[tuple[str, ...]]:
     return [
         ("fs", "end"),
@@ -56,7 +56,7 @@ def sample_data3() -> list[tuple[str, ...]]:
     ]
 
 
-@pytest.fixture()
+@pytest.fixture
 def valid_paths1() -> set[str]:
     return {
         "start, A, b, A, c, A, end",
@@ -72,7 +72,7 @@ def valid_paths1() -> set[str]:
     }
 
 
-@pytest.fixture()
+@pytest.fixture
 def valid_paths2() -> set[str]:
     return {
         "start, HN, dc, HN, end",
@@ -97,7 +97,7 @@ def valid_paths2() -> set[str]:
     }
 
 
-@pytest.fixture()
+@pytest.fixture
 def valid_paths1b() -> set[str]:
     return {
         "start, A, b, A, b, A, c, A, end",

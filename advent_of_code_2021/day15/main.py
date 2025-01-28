@@ -24,7 +24,7 @@ def get_edges(risk_levels: list[list[int]]) -> list[tuple[int, int, int]]:
                     (
                         current_cell,
                         current_cell - 1,
-                        risk_levels[row_index][column_index - 1],
+                        row[column_index - 1],
                     ),
                 )
 
@@ -42,7 +42,7 @@ def get_edges(risk_levels: list[list[int]]) -> list[tuple[int, int, int]]:
                     (
                         current_cell,
                         current_cell + 1,
-                        risk_levels[row_index][column_index + 1],
+                        row[column_index + 1],
                     ),
                 )
 

@@ -6,7 +6,7 @@ from advent_of_code_2021.day13.main import Axis
 from helpers import Point2D
 
 
-@pytest.fixture()
+@pytest.fixture
 def sample_data() -> tuple[list[Point2D], list[tuple[Axis, int]]]:
     return (
         [
@@ -36,7 +36,7 @@ def sample_data() -> tuple[list[Point2D], list[tuple[Axis, int]]]:
     )
 
 
-@pytest.fixture()
+@pytest.fixture
 def initial_pattern() -> list[list[bool]]:
     return [
         [False, False, False, True, False, False, True, False, False, True, False],
@@ -57,7 +57,7 @@ def initial_pattern() -> list[list[bool]]:
     ]
 
 
-@pytest.fixture()
+@pytest.fixture
 def pattern_string() -> str:
     return """...#..#..#.
 ....#......
@@ -77,7 +77,7 @@ def pattern_string() -> str:
 """
 
 
-@pytest.fixture()
+@pytest.fixture
 def folded_pattern_y() -> list[list[bool]]:
     return [
         [True, False, True, True, False, False, True, False, False, True, False],
@@ -90,7 +90,7 @@ def folded_pattern_y() -> list[list[bool]]:
     ]
 
 
-@pytest.fixture()
+@pytest.fixture
 def folded_pattern_y_string() -> str:
     return """#.##..#..#.
 #...#......
@@ -102,7 +102,7 @@ def folded_pattern_y_string() -> str:
 """
 
 
-@pytest.fixture()
+@pytest.fixture
 def folded_pattern_x() -> list[list[bool]]:
     return [
         [True, True, True, True, True],
@@ -115,7 +115,7 @@ def folded_pattern_x() -> list[list[bool]]:
     ]
 
 
-@pytest.fixture()
+@pytest.fixture
 def folded_pattern_x_string() -> str:
     return """#####
 #...#
