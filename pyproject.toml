@@ -4,6 +4,9 @@ force_single_line = true
 add_imports = "from __future__ import annotations"
 
 [tool.ruff]
+fix = true
+
+[tool.ruff.lint]
 select = [
     "A",
     "ANN",
@@ -63,10 +66,9 @@ ignore = [
     "ERA001",
     "PLR2004",
 ]
-fix = true
 
 
-[tool.ruff.per-file-ignores]
+[tool.ruff.lint.per-file-ignores]
 "*/tests/*.py" = ["S101"]
 "advent_of_code_2021/day16/main.py" = ["PLR0911"]
 "advent_of_code_2022/day11/main.py" = ["C901"]
@@ -74,5 +76,5 @@ fix = true
 "advent_of_code_2022/day14/main.py" = ["C901", "PLR0912"]
 
 
-[tool.ruff.isort]
+[tool.ruff.lint.isort]
 force-single-line = true
