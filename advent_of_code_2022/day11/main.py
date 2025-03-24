@@ -110,9 +110,9 @@ def run_inspections(
     worry_level_reducer: Callable,
 ) -> int:
     max_monkey_number = max(monkeys.keys())
-    monkey_inspection_counts: dict[int, int] = {
-        monkey_number: 0 for monkey_number in range(max_monkey_number + 1)
-    }
+    monkey_inspection_counts: dict[int, int] = dict.fromkeys(
+        range(max_monkey_number + 1), 0
+    )
 
     for _ in range(number_of_rounds):
         for monkey_number in range(max_monkey_number + 1):
