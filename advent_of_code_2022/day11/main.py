@@ -111,7 +111,8 @@ def run_inspections(
 ) -> int:
     max_monkey_number = max(monkeys.keys())
     monkey_inspection_counts: dict[int, int] = dict.fromkeys(
-        range(max_monkey_number + 1), 0
+        range(max_monkey_number + 1),
+        0,
     )
 
     for _ in range(number_of_rounds):
